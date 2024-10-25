@@ -1,13 +1,61 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "./supabaseClient";
+import { useLocation } from "react-router-dom";
 
 export default function SignUp() {
   const [loading, setLoading] = useState(false);
+  const [invitationValid, setInvitationValid] = useState(false);
+  const [invitationError, setInvitationError] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  // Obtener el `invitationId` de los parámetros de la URL
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const invitationId = queryParams.get("invitationId");
+
+  useEffect(() => {
+    // Verificar el token de invitación cuando el componente se monta
+    const verifyInvitation = async () => {
+      if (!invitationId) {
+        setInvitationError("No invitation token provided.");
+        return;
+      }
+
+      const { data, error } = await supabase
+        .from("invitations")
+        .select("*")
+        .eq("id", invitationId)
+        .eq("is_used", false)
+        .single();
+
+      console.log("data", data);
+      if (error || !data) {
+        setInvitationError("Invalid or expired invitation token.");
+        console.error("Error verifying invitation:", error);
+      } else {
+        // Comprobar si la invitación ha expirado
+        const now = new Date();
+        const expiresAt = new Date(data.expires_at);
+        if (expiresAt < now) {
+          setInvitationError("Invitation has expired.");
+        } else {
+          setEmail(data.email); // Prellenar el email de la invitación
+          setInvitationValid(true);
+        }
+      }
+    };
+
+    verifyInvitation();
+  }, [invitationId]);
+
   const handleSignUp = async (event) => {
     event.preventDefault();
+
+    if (!invitationValid) {
+      alert("Invalid or expired invitation token.");
+      return;
+    }
 
     setLoading(true);
     const { error } = await supabase.auth.signUp({
@@ -16,38 +64,66 @@ export default function SignUp() {
     });
 
     if (error) {
+      console.error("Error during sign up:", error);
       alert(error.error_description || error.message);
     } else {
+      // Marcar la invitación como usada después del registro exitoso
+      const { data: updateData, error: updateError } = await supabase
+        .from("invitations")
+        .update({ used: true })
+        .eq("id", invitationId);
+
+      if (updateError) {
+        console.error("Error updating invitation:", updateError);
+      }
+
       alert(
-        "Sign up successful! Please check your email to confirm your account."
+        "¡Registro exitoso! Por favor, revisa tu correo electrónico para confirmar tu cuenta."
       );
     }
     setLoading(false);
   };
 
+  if (invitationError) {
+    return (
+      <div>
+        <h1>Invitación inválida</h1>
+        <p>{invitationError}</p>
+      </div>
+    );
+  }
+
+  if (!invitationValid) {
+    return (
+      <div>
+        <h1>Verificando invitación...</h1>
+      </div>
+    );
+  }
+
   return (
     <div className="row flex flex-center">
       <div className="col-6 form-widget">
-        <h1 className="header">Sign Up with Supabase</h1>
+        <h1 className="header">Registrarse con Supabase</h1>
         <p className="description">
-          Create an account with your email and password below
+          Crea una cuenta con tu correo electrónico y contraseña a continuación
         </p>
         <form className="form-widget" onSubmit={handleSignUp}>
           <div>
             <input
               className="inputField"
               type="email"
-              placeholder="Your email"
+              placeholder="Tu correo electrónico"
               value={email}
               required
-              onChange={(e) => setEmail(e.target.value)}
+              readOnly
             />
           </div>
           <div>
             <input
               className="inputField"
               type="password"
-              placeholder="Your password"
+              placeholder="Tu contraseña"
               value={password}
               required
               onChange={(e) => setPassword(e.target.value)}
@@ -55,7 +131,7 @@ export default function SignUp() {
           </div>
           <div>
             <button className={"button block"} disabled={loading}>
-              {loading ? <span>Loading</span> : <span>Sign up</span>}
+              {loading ? <span>Cargando...</span> : <span>Registrarse</span>}
             </button>
           </div>
         </form>
