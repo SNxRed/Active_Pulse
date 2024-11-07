@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { supabase } from "./supabaseClient";
-import './Admin.css';
 
 export default function AdminInvite() {
   const [email, setEmail] = useState("");

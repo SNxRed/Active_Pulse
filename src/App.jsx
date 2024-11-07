@@ -1,4 +1,3 @@
-import './App.css';
 import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { supabase } from './supabaseClient';
@@ -9,6 +8,7 @@ import Admin from './Admin';
 import ForgotPassword from './ForgotPassword';
 import UpdatePassword from './UpdatePassword';
 import LogoLayout from './LogoLayout';
+import './index.css';
 
 function App() {
   const [session, setSession] = useState(null);

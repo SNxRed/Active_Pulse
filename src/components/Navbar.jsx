@@ -2,7 +2,6 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 import logo from '../assets/Captura de pantalla 2024-11-04 155855.png';
-import './Navbar.css';
 
 function Navbar() {
   const navigate = useNavigate();
