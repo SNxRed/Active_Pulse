@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { supabase } from "./supabaseClient";
+import './Admin.css';
 
 export default function AdminInvite() {
   const [email, setEmail] = useState("");
@@ -71,17 +72,22 @@ export default function AdminInvite() {
   };
 
   return (
-    <div>
-      <h2>Invite a New User</h2>
-      <input
-        type="email"
-        placeholder="Enter user email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <button onClick={handleInvite} disabled={loading}>
-        {loading ? "Sending..." : "Send Invitation"}
-      </button>
+    <div className="invite-container">
+      <div className="invite-box">
+        <h2>Invitar a un Nuevo Usuario</h2>
+        <p className="invite-description">Ingresa el correo electrónico del usuario para enviar la invitación</p>
+        <input
+          className="inputField"
+          type="email"
+          placeholder="Correo electrónico"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <button className="button" onClick={handleInvite} disabled={loading}>
+          {loading ? "Enviando..." : "Enviar Invitación"}
+        </button>
+      </div>
     </div>
   );
 }

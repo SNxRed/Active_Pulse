@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from './supabaseClient';
+import './Auth.css';
 
 export default function Auth() {
   const [loading, setLoading] = useState(false);
@@ -9,7 +10,6 @@ export default function Auth() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Si el usuario ya tiene una sesión activa, redirige a la página principal
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session) {
         navigate('/');
@@ -19,7 +19,6 @@ export default function Auth() {
 
   const handleLogin = async (event) => {
     event.preventDefault();
-
     setLoading(true);
     const { error } = await supabase.auth.signInWithPassword({ email, password });
 
@@ -27,7 +26,6 @@ export default function Auth() {
       alert(error.error_description || error.message);
     } else {
       alert('¡Inicio de sesión exitoso!');
-      // Redirige a la página principal después de iniciar sesión
       navigate('/');
     }
     setLoading(false);
@@ -37,41 +35,63 @@ export default function Auth() {
     navigate('/forgot-password');
   };
 
+  const handleOAuthLogin = async (provider) => {
+    setLoading(true);
+    const { error } = await supabase.auth.signInWithOAuth({ provider });
+    if (error) {
+      alert(error.message);
+    }
+    setLoading(false);
+  };
+
   return (
-    <div className="row flex flex-center">
-      <div className="col-6 form-widget">
-        <h1 className="header">Active Pulse</h1>
-        <p className="description">Inicia sesión con tu correo electrónico y contraseña</p>
+    <div className="auth-container">
+      <div className="auth-box">
+        <h2>Iniciar Sesión</h2>
+        <p className="auth-description">Accede con tu correo electrónico y contraseña</p>
         <form className="form-widget" onSubmit={handleLogin}>
-          <div>
-            <input
-              className="inputField"
-              type="email"
-              placeholder="Tu correo electrónico"
-              value={email}
-              required
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <div>
-            <input
-              className="inputField"
-              type="password"
-              placeholder="Tu contraseña"
-              value={password}
-              required
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          <div>
-            <button className={'button block'} disabled={loading}>
-              {loading ? <span>Cargando</span> : <span>Iniciar sesión</span>}
-            </button>
-          </div>
+          <input
+            className="inputField"
+            type="email"
+            placeholder="Tu correo electrónico"
+            value={email}
+            required
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            className="inputField"
+            type="password"
+            placeholder="Tu contraseña"
+            value={password}
+            required
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button className="button-login" disabled={loading}>
+            {loading ? 'Cargando...' : 'Iniciar Sesión'}
+          </button>
         </form>
-        <div>
-          <button className="button block link" onClick={handleForgotPassword}>
+
+        <div className="auth-oauth">
+          <button
+            className="google-button"
+            onClick={() => handleOAuthLogin('google')}
+            disabled={loading}
+          >
+            <img
+              src="https://fonts.gstatic.com/s/i/productlogos/googleg/v6/24px.svg"
+              alt="Google logo"
+              className="google-logo"
+            />
+            <span>Iniciar sesión con Google</span>
+          </button>
+        </div>
+
+        <div className="extra-options">
+          <button className="link-button" onClick={handleForgotPassword}>
             ¿Olvidaste tu contraseña?
+          </button>
+          <button className="link-button" onClick={() => navigate('/user')}>
+            Ingresar como invitado
           </button>
         </div>
       </div>
