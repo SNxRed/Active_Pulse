@@ -8,8 +8,7 @@ export default function SignUp() {
   const [invitationError, setInvitationError] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState(""); // Estado para verificar la contraseña
-  const [passwordError, setPasswordError] = useState("");
+  
 
   // Obtener el `invitationId` de los parámetros de la URL
   const location = useLocation();
