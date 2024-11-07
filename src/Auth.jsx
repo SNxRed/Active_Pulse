@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from './supabaseClient';
-import './Auth.css';
 
 export default function Auth() {
   const [loading, setLoading] = useState(false);
@@ -49,7 +48,7 @@ export default function Auth() {
       <div className="auth-box">
         <h2>Iniciar Sesión</h2>
         <p className="auth-description">Accede con tu correo electrónico y contraseña</p>
-        <form className="form-widget" onSubmit={handleLogin}>
+        <form className="form-widget-1" onSubmit={handleLogin}>
           <input
             className="inputField"
             type="email"
