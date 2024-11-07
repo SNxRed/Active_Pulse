@@ -8,6 +8,7 @@ export default function SignUp() {
   const [invitationError, setInvitationError] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  
 
   // Obtener el `invitationId` de los parámetros de la URL
   const location = useLocation();
@@ -102,40 +103,38 @@ export default function SignUp() {
   }
 
   return (
-    <div className="row flex flex-center">
-      <div className="col-6 form-widget">
-        <h1 className="header">Registrarse con Supabase</h1>
-        <p className="description">
-          Crea una cuenta con tu correo electrónico y contraseña a continuación
-        </p>
-        <form className="form-widget" onSubmit={handleSignUp}>
-          <div>
-            <input
-              className="inputField"
-              type="email"
-              placeholder="Tu correo electrónico"
-              value={email}
-              required
-              readOnly
-            />
-          </div>
-          <div>
-            <input
-              className="inputField"
-              type="password"
-              placeholder="Tu contraseña"
-              value={password}
-              required
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          <div>
-            <button className={"button block"} disabled={loading}>
-              {loading ? <span>Cargando...</span> : <span>Registrarse</span>}
-            </button>
-          </div>
-        </form>
+    <div className="form-container">
+    <h1 className="header">Registrate en Active Pulse</h1>
+    <p className="description">
+      Crea una cuenta con tu correo electrónico y contraseña a continuación
+    </p>
+    <form onSubmit={handleSignUp}>
+      <div>
+        <input
+          className="inputField"
+          type="email"
+          placeholder="Tu correo electrónico"
+          value={email}
+          required
+          readOnly
+        />
       </div>
-    </div>
-  );
+      <div>
+        <input
+          className="inputField"
+          type="password"
+          placeholder="Tu contraseña"
+          value={password}
+          required
+          onChange={(e) => setPassword(e.target.value)}
+        />
+      </div>
+      <div>
+        <button className="button" disabled={loading}>
+          {loading ? <span>Cargando...</span> : <span>Registrarse</span>}
+        </button>
+      </div>
+    </form>
+  </div>
+);
 }

@@ -24,36 +24,31 @@ export default function ForgotPassword() {
   };
 
   return (
-    <div className="row flex flex-center">
-      <div className="col-6 form-widget">
-        <h1 className="header">Reset Password</h1>
-        {message ? (
-          <p className="description">{message}</p>
-        ) : (
-          <>
-            <p className="description">
-              Enter your email address below, and we will send you a link to reset your password.
-            </p>
-            <form className="form-widget" onSubmit={handlePasswordReset}>
-              <div>
-                <input
-                  className="inputField"
-                  type="email"
-                  placeholder="Your email"
-                  value={email}
-                  required
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-              <div>
-                <button className={'button block'} disabled={loading}>
-                  {loading ? <span>Loading</span> : <span>Send Reset Email</span>}
-                </button>
-              </div>
-            </form>
-          </>
-        )}
-      </div>
+    <div className="form-container">
+      <h1>Restablecer Contraseña</h1>
+      {message ? (
+        <p className="description">{message}</p>
+      ) : (
+        <>
+          <p className="description">
+            Ingresa tu correo electrónico y te enviaremos un enlace para restablecer tu contraseña.
+          </p>
+          <form onSubmit={handlePasswordReset}>
+            <input
+              className="inputField"
+              type="email"
+              placeholder="Tu correo electrónico"
+              value={email}
+              required
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <button className="button" disabled={loading}>
+              {loading ? <span>Cargando...</span> : <span>Enviar enlace de restablecimiento</span>}
+            </button>
+          </form>
+        </>
+      )}
     </div>
   );
+  
 }
