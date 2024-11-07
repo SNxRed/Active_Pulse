@@ -67,10 +67,6 @@ export default function Account({ session }) {
     setLoading(false);
   }
 
-  const goToAdmin = () => {
-    navigate('/admin'); // Cambia '/admin' por la ruta de tu vista de administrador
-  };
-
   return (
     <form onSubmit={(e) => updateProfile(e)} className="form-widget">
       <Avatar
@@ -107,18 +103,6 @@ export default function Account({ session }) {
       <div>
         <button className="button block primary" type="submit" disabled={loading}>
           {loading ? 'Loading ...' : 'Update'}
-        </button>
-      </div>
-
-      <div>
-        <button className="button block" type="button" onClick={() => supabase.auth.signOut()}>
-          Sign Out
-        </button>
-      </div>
-
-      <div>
-        <button className="button block secondary" type="button" onClick={goToAdmin}>
-          Go to Admin
         </button>
       </div>
     </form>

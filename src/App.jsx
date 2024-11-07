@@ -8,6 +8,7 @@ import Register from './Register';
 import Admin from './Admin';
 import ForgotPassword from './ForgotPassword';
 import UpdatePassword from './UpdatePassword';
+import LogoLayout from './LogoLayout';
 
 function App() {
   const [session, setSession] = useState(null);
@@ -35,15 +36,16 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/update-password" element={<UpdatePassword />} />
+          <Route path="/user"/> 
 
           {/* Rutas protegidas */}
           <Route
             path="/"
-            element={session ? <Account key={session.user.id} session={session} /> : <Navigate to="/login" replace />}
+            element={session ? <LogoLayout><Account key={session.user.id} session={session} /></LogoLayout> : <Navigate to="/login" replace />}
           />
           <Route
             path="/admin"
-            element={session ? <Admin /> : <Navigate to="/login" replace />}
+            element={session ? <LogoLayout><Admin /></LogoLayout> : <Navigate to="/login" replace />}
           />
 
           {/* Ruta por defecto */}
@@ -51,6 +53,7 @@ function App() {
         </Routes>
       </div>
     </Router>
+    
   );
 }
 
