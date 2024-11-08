@@ -33,6 +33,10 @@ h2 {
   padding: 20px;
 }
 
+.header {
+  font-family: 'BIG SHOULDER DISPLAY', sans-serif;
+  color: #032246; 
+
 /* Estilo de la caja de autenticaciÃ³n */
 .auth-box {
   width: 100%;
@@ -126,6 +130,8 @@ h2 {
 .button-login:hover:enabled {
   background-color: #370061;
 }
+
+/* Mensajes */
 
 /* Estilo para los botones de enlace */
 .link-button {
@@ -309,6 +315,24 @@ button:focus-visible {
 .navbar-buttons {
   display: flex;
   gap: 15px;
+}
+
+.reset-password-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  
+}
+
+.reset-password-box {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
 }
 
 .navbar-button {
