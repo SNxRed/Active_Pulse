@@ -36,7 +36,7 @@ h2 {
 .header {
   font-family: 'BIG SHOULDER DISPLAY', sans-serif;
   color: #032246; 
-
+}
 /* Estilo de la caja de autenticaciÃ³n */
 .auth-box {
   width: 100%;
@@ -130,8 +130,6 @@ h2 {
 .button-login:hover:enabled {
   background-color: #370061;
 }
-
-/* Mensajes */
 
 /* Estilo para los botones de enlace */
 .link-button {
@@ -362,5 +360,4 @@ button:focus-visible {
   background-color: #d6d6d6;
   color: #9e9e9e;
   cursor: not-allowed;
-}
 }
