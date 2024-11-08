@@ -25,7 +25,7 @@ export default function UpdatePassword() {
     setLoading(false);
   };
 
-  useEffect(() => {
+ /*useEffect(() => {
     // Si el usuario no está autenticado, redirigir a la página de inicio de sesión
     const checkSession = async () => {
       const { data } = await supabase.auth.getSession();
@@ -34,28 +34,27 @@ export default function UpdatePassword() {
       }
     };
     checkSession();
-  }, [navigate]);
+  }, [navigate]);*/
 
   return (
-    <div className="row flex flex-center">
-      <div className="col-6 form-widget">
+    <div className="reset-password-container">
+      <div className="reset-password-box">
         <h1 className="header">Establecer Nueva Contraseña</h1>
-        <form className="form-widget" onSubmit={handleUpdatePassword}>
-          <div>
-            <input
-              className="inputField"
-              type="password"
-              placeholder="Nueva contraseña"
-              value={password}
-              required
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          <div>
-            <button className={'button block'} disabled={loading}>
-              {loading ? <span>Cargando...</span> : <span>Actualizar Contraseña</span>}
-            </button>
-          </div>
+        <p className="description">
+          Ingresa tu nueva contraseña para actualizar tu cuenta.
+        </p>
+        <form onSubmit={handleUpdatePassword}>
+          <input
+            className="inputField"
+            type="password"
+            placeholder="Nueva contraseña"
+            value={password}
+            required
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button className="button" disabled={loading}>
+            {loading ? <span>Cargando...</span> : <span>Actualizar Contraseña</span>}
+          </button>
         </form>
       </div>
     </div>
