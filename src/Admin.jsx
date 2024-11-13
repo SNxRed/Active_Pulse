@@ -8,8 +8,6 @@ export default function AdminInvite() {
   const handleInvite = async () => {
     setLoading(true);
 
-    console.log("Sending invitation");
-
     const {
       data: { user },
       error,
@@ -62,7 +60,7 @@ export default function AdminInvite() {
     console.log("Invitation sent", result);
 
     if (response.ok) {
-      alert("Invitation sent successfully!");
+      alert("Invitacion enviada correctamente!");
     } else {
       alert(`Error: ${result.error}`);
     }
