@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { supabase } from "./supabaseClient";
 import { useLocation } from "react-router-dom";
+import "./styles/Register.css";
 
 export default function SignUp() {
   const [loading, setLoading] = useState(false);
@@ -8,21 +9,34 @@ export default function SignUp() {
   const [invitationError, setInvitationError] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordValid, setPasswordValid] = useState(false);
+  const [passwordsMatch, setPasswordsMatch] = useState(true);
+  const [showPasswordPopup, setShowPasswordPopup] = useState(false);
 
-  // Obtener el `invitationId` de los parámetros de la URL
+  // Nuevos campos para el perfil
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [address, setAddress] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState("");
+  const [gender, setGender] = useState("");
+  const [emergencyContactName, setEmergencyContactName] = useState("");
+  const [emergencyContactPhone, setEmergencyContactPhone] = useState("");
+
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const invitationId = queryParams.get("invitationId");
 
+  // Verificar la invitación cuando se monta el componente
   useEffect(() => {
-    // Verificar el token de invitación cuando el componente se monta
     const verifyInvitation = async () => {
       if (!invitationId) {
-        setInvitationError("No invitation token provided.");
+        setInvitationError("No se proporcionó un token de invitación.");
         return;
       }
 
+      // Verificar la invitación en Supabase
       const { data, error } = await supabase
         .from("invitations")
         .select("*")
@@ -30,58 +44,111 @@ export default function SignUp() {
         .eq("is_used", false)
         .single();
 
-      console.log("data", data);
       if (error || !data) {
-        setInvitationError("Invalid or expired invitation token.");
-        console.error("Error verifying invitation:", error);
+        setInvitationError("Invitación inválida o expirada.");
       } else {
-        // Comprobar si la invitación ha expirado
         const now = new Date();
         const expiresAt = new Date(data.expires_at);
         if (expiresAt < now) {
-          setInvitationError("Invitation has expired.");
+          setInvitationError("La invitación ha expirado.");
         } else {
-          setEmail(data.email); // Prellenar el email de la invitación
+          setEmail(data.email); // Rellenar el email de la invitación
           setInvitationValid(true);
         }
       }
     };
 
     verifyInvitation();
-  }, [invitationId]);
+  }, [invitationId]); 
+
+  /*useEffect(() => {
+    setInvitationValid(true); // Fuerza el formulario a mostrarse
+  }, []); */
+
+  const validatePassword = (password) => {
+    const lengthRequirement = password.length >= 8;
+    const uppercaseRequirement = /[A-Z]/.test(password);
+    const numberRequirement = /[0-9]/.test(password);
+    const specialCharRequirement = /[!@#$%^&*]/.test(password);
+
+    setPasswordValid(
+      lengthRequirement &&
+        uppercaseRequirement &&
+        numberRequirement &&
+        specialCharRequirement
+    );
+  };
 
   const handleSignUp = async (event) => {
     event.preventDefault();
-
-    if (!invitationValid) {
-      alert("Invalid or expired invitation token.");
+  
+    if (password !== confirmPassword) {
+      setPasswordsMatch(false);
       return;
     }
-
+  
+    setPasswordsMatch(true);
     setLoading(true);
-    const { error } = await supabase.auth.signUp({
+  
+    const { data: authData, error } = await supabase.auth.signUp({
       email,
       password,
     });
-
+  
     if (error) {
-      console.error("Error during sign up:", error);
-      alert(error.error_description || error.message);
-    } else {
-      // Marcar la invitación como usada después del registro exitoso
-      const { data: updateData, error: updateError } = await supabase
-        .from("invitations")
-        .update({ used: true })
-        .eq("id", invitationId);
-
-      if (updateError) {
-        console.error("Error updating invitation:", updateError);
-      }
-
-      alert(
-        "¡Registro exitoso! Por favor, revisa tu correo electrónico para confirmar tu cuenta."
-      );
+      console.error("Error durante el registro:", error);
+      alert(error.message);
+      setLoading(false);
+      return;
     }
+  
+    const userId = authData.user?.id;
+  
+    if (userId) {
+      try {
+        const response = await fetch("http://localhost:3001/api/validate-signup", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId,
+            firstName,
+            lastName,
+            phoneNumber,
+            address,
+            dateOfBirth,
+            gender,
+            emergencyContactName,
+            emergencyContactPhone,
+          }),
+        });
+  
+        const result = await response.json();
+  
+        if (response.ok) {
+          alert(result.message);
+        } else {
+          alert(result.error || "Error al crear el perfil de usuario.");
+        }
+  
+        const { error: updateError } = await supabase
+          .from("invitations")
+          .update({ is_used: true })
+          .eq("id", invitationId);
+  
+        if (updateError) {
+          console.error("Error al actualizar el estado de la invitación:", updateError);
+        }
+  
+      } catch (err) {
+        console.error("Error al invocar la API intermedia:", err);
+        alert("Error al comunicarse con el servidor.");
+      }
+    } else {
+      alert("Error: No se pudo obtener el ID del usuario.");
+    }
+  
     setLoading(false);
   };
 
@@ -103,38 +170,169 @@ export default function SignUp() {
   }
 
   return (
+
+    <div>
+      {/*Encabezado*/}
+      <header
+      style={{
+        width: '100%',
+        background: 'linear-gradient(to bottom, #7f00b2, #510085)', // Degradado
+        padding: '1rem 2rem',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-start', // Logo y título alineados a la izquierda
+        boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+      }}
+      >
+      {/*Logo*/} 
+      <img
+      src="/images/logo2.png" // Ajusta la ruta del logo
+      alt="Logo Active Pulse"
+      style={{
+        height: '50px', // Ajusta el tamaño del logo
+        marginRight: '1rem', // Espacio entre el logo y el título
+      }}
+    />
+      </header>
+
+    {/*Formulario*/}
     <div className="form-container">
-    <h1 className="header">Registrate en Active Pulse</h1>
-    <p className="description">
-      Crea una cuenta con tu correo electrónico y contraseña a continuación
-    </p>
-    <form onSubmit={handleSignUp}>
-      <div>
+      <h1 className="form-title"> Regístrate en Active Pulse </h1>
+      <form onSubmit={handleSignUp} className= "form-grid">
+      
+        <input 
+          className="inputField"
+          type="text"
+          placeholder="Nombre"
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+          required
+        />
+
         <input
           className="inputField"
-          type="email"
-          placeholder="Tu correo electrónico"
-          value={email}
+          type="text"
+          placeholder="Apellido"
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
           required
-          readOnly
         />
-      </div>
-      <div>
+       
+        <input
+          className="inputField"
+          type="tel"
+          placeholder="Teléfono"
+          value={phoneNumber}
+          onChange={(e) => setPhoneNumber(e.target.value)}
+          required
+        />
+        <input
+          className="inputField"
+          type="text"
+          placeholder="Dirección"
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
+        />
+      
+       
+      <input
+        className="inputField"
+        type="date"
+        placeholder="Fecha de Nacimiento"
+        value={dateOfBirth}
+        onChange={(e) => setDateOfBirth(e.target.value)}
+        required
+      />
+      <select
+        className="inputField"
+        value={gender}
+        onChange={(e) => setGender(e.target.value)}
+        required
+      >
+        <option value="">Género</option>
+        <option value="male">Masculino</option>
+        <option value="female">Femenino</option>
+        <option value="other">Otro</option>
+      </select>
+   
+      <input
+        className="inputField"
+        type="text"
+        placeholder="Nombre de Contacto de Emergencia"
+        value={emergencyContactName}
+        onChange={(e) => setEmergencyContactName(e.target.value)}
+      />
+      <input
+        className="inputField"
+        type="tel"
+        placeholder="Teléfono de Contacto de Emergencia"
+        value={emergencyContactPhone}
+        onChange={(e) => setEmergencyContactPhone(e.target.value)}
+      />
+   
+       
         <input
           className="inputField"
           type="password"
           placeholder="Tu contraseña"
           value={password}
+          onFocus={() => setShowPasswordPopup(true)}
+          onBlur={() => setShowPasswordPopup(false)}
+          onChange={(e) => {
+            setPassword(e.target.value);
+            validatePassword(e.target.value);
+          }}
           required
-          onChange={(e) => setPassword(e.target.value)}
         />
-      </div>
-      <div>
-        <button className="button" disabled={loading}>
+       {showPasswordPopup && (
+          <div className="password-popup">
+            <p className={password.length >= 8 ? "valid" : "invalid"}>
+              Mínimo 8 caracteres
+            </p>
+            <p className={/[A-Z]/.test(password) ? "valid" : "invalid"}>
+              Al menos una letra mayúscula
+            </p>
+            <p className={/[0-9]/.test(password) ? "valid" : "invalid"}>
+              Al menos un número
+            </p>
+            <p className={/[!@#$%^&*]/.test(password) ? "valid" : "invalid"}>
+              Al menos un carácter especial
+            </p>
+          </div>
+        )} 
+        <input
+          className="inputField"
+          type="password"
+          placeholder="Confirma tu contraseña"
+          value={confirmPassword}
+          onChange={(e) => {
+            setConfirmPassword(e.target.value);
+            setPasswordsMatch(true);
+          }}
+          required
+        />
+        
+        {!passwordsMatch && (
+          <p className="error">Las contraseñas no coinciden</p>
+        )}
+
+        <button className="button" disabled={loading || !passwordValid}>
           {loading ? <span>Cargando...</span> : <span>Registrarse</span>}
         </button>
-      </div>
-    </form>
-  </div>
-);
+
+
+
+
+      </form>
+
+      
+
+    </div>
+    <div className="background-images">
+  <img src="/images/logo3.1.png" alt="Esquina izquierda" className="corner-image left" />
+  <img src="/images/logo3.1.png" alt="Esquina derecha" className="corner-image right" />
+</div>
+
+    </div>
+  );
 }

@@ -196,7 +196,7 @@ body {
   align-items: center;
   min-width: 320px;
   min-height: 100vh;
-  background-color: #370061;
+  background-color: #7f00b2;
 }
 
 h1 {
@@ -339,3 +339,10 @@ button:focus-visible {
   color: #9e9e9e;
   cursor: not-allowed;
 }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
