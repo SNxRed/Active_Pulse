@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from './supabaseClient';
 import { useNavigate } from 'react-router-dom';
+import './index.css';
 
 export default function UpdatePassword() {
   const [password, setPassword] = useState('');
@@ -25,7 +26,15 @@ export default function UpdatePassword() {
     setLoading(false);
   };
 
- /*useEffect(() => {
+
+
+  /*useEffect(() => {
+    // Saltar la verificación de sesión en modo desarrollo
+    console.log("Modo desarrollo: omitiendo verificación de sesión.");
+  }, []); */
+
+ useEffect(() => {
+
     // Si el usuario no está autenticado, redirigir a la página de inicio de sesión
     const checkSession = async () => {
       const { data } = await supabase.auth.getSession();
@@ -34,8 +43,9 @@ export default function UpdatePassword() {
       }
     };
     checkSession();
-  }, [navigate]);*/
+  }, [navigate]);
 
+  
   return (
     <div className="reset-password-container">
       <div className="reset-password-box">
@@ -56,7 +66,19 @@ export default function UpdatePassword() {
             {loading ? <span>Cargando...</span> : <span>Actualizar Contraseña</span>}
           </button>
         </form>
+
+        <img
+  src="/public/images/logo3.1.png"
+  alt="Descripción de la imagen"
+  style={{
+    width: '100px', 
+    height: 'auto', 
+    borderRadius: '8px', 
+  }}
+/>
+
       </div>
+      
     </div>
   );
 }

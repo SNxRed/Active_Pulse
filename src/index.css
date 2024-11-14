@@ -36,6 +36,7 @@ h2 {
 .header {
   font-family: 'BIG SHOULDER DISPLAY', sans-serif;
   color: #032246; 
+}
 
 /* Estilo de la caja de autenticaciÃ³n */
 .auth-box {
@@ -202,7 +203,7 @@ body {
   align-items: center;
   min-width: 320px;
   min-height: 100vh;
-  background-color: #370061;
+  background-color: #7f00b2;
 }
 
 h1 {
