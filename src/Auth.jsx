@@ -89,9 +89,9 @@ export default function Auth() {
           <button className="link-button" onClick={handleForgotPassword}>
             ¿Olvidaste tu contraseña?
           </button>
-          {/* <button className="link-button" onClick={() => navigate('/user')}>
+          {<button className="link-button" onClick={() => navigate('/user')}>
             Ingresar como invitado
-          </button> */}
+          </button>}
         </div>
       </div>
     </div>

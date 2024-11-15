@@ -76,21 +76,20 @@ function Navbar() {
       <div className="navbar-buttons">
         {user ? (
           <>
-            <button onClick={goToUserProfile} className="navbar-button">
+            {/* <button onClick={goToUserProfile} className="navbar-button">
               Mi perfil
-            </button>
-            <button onClick={() => navigate("/user")} className="navbar-button">
+            </button> */}
+            <button onClick={() => navigate('/user')} className="navbar-button">
               Inicio
             </button>
-            <button
-              onClick={() => navigate("/admin")}
-              className="navbar-button"
-            >
-              Invitar cliente
-            </button>
-            <button onClick={() => navigate("/")} className="navbar-button">
-              Perfil Admin
-            </button>
+            {/* {isAdmin && ( */}
+              <button onClick={() => navigate('/admin')} className="navbar-button">
+                Invitar cliente
+              </button>
+              <button onClick={() => navigate('/')} className="navbar-button">
+                Perfil
+              </button>
+            {/* )} */}
             <button onClick={handleSignOut} className="navbar-button">
               Cerrar sesión
             </button>

@@ -16,7 +16,7 @@ export default function Usuario() {
         <div className="service-card">
           <img src="./src/assets/453392302_406024249139385_18417203966498385_n.jpg" alt="Servicio 1" className="service-image" />
           <div className="service-text">
-            <h2>Rutinas personalizada</h2>
+            <h2>Rutinas personalizadas</h2>
             <h4>Te proporcionamos un programa personalizado que se adapte a tus objetivos y nivel de habilidad.</h4>
             <h4>A través de ejercicios especializados y técnicas avanzadas, trabajarás en mejorar tu resistencia, fuerza, velocidad y agilidad, así como en desarrollar tus habilidades técnicas como el dominio del balón, el pase preciso, el tiro potente y la táctica de juego.</h4>
           </div>
@@ -40,9 +40,9 @@ export default function Usuario() {
       </div>
 
       {/* Contacto con el Administrador */}
-      <h2>¿Necesitas más información o quieres agendar una hora?</h2>
       <div className="contact-section">
         <div className="contact-text">
+          <h2>¿Necesitas más información o quieres agendar una hora?</h2>
           <h2>Contacto de Arturo Rojas</h2>
           <h3>Teléfono: +56 966 933 685</h3>
           <h3>Instagram: <a href="https://www.instagram.com/activepulse.cl?igsh=cjE5OGQ0NjhuZWVy">@activepulse.cl </a></h3>

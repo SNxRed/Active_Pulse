@@ -82,7 +82,7 @@ export default function SignUp() {
     const uppercaseRequirement = /[A-Z]/.test(password);
     const numberRequirement = /[0-9]/.test(password);
     const specialCharRequirement = /[!@#$%^&*]/.test(password);
-
+    
     setPasswordValid(
       lengthRequirement &&
         uppercaseRequirement &&
@@ -90,7 +90,6 @@ export default function SignUp() {
         specialCharRequirement
     );
   };
-
 
   const handleSignUp = async (event) => {
     event.preventDefault();
