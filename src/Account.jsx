@@ -1,81 +1,59 @@
 import { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { supabase } from './supabaseClient';
-import Avatar from './Avatar';
-import { useNavigate } from 'react-router-dom'; // Importa useNavigate
+import foto from './assets/Captura de pantalla 2024-11-12 121356.png';
 
 export default function Account({ session }) {
   const [loading, setLoading] = useState(true);
   const [username, setUsername] = useState(null);
   const [website, setWebsite] = useState(null);
-  const [avatar_url, setAvatarUrl] = useState(null);
-  const navigate = useNavigate(); // Crea el hook de navegación
 
-  useEffect(() => {
-    let ignore = false;
-    async function getProfile() {
-      setLoading(true);
-      const { user } = session;
+  // useEffect(() => {
+  //   // let ignore = false;
 
-      const { data, error } = await supabase
-        .from('profiles')
-        .select('username, website, avatar_url')
-        .eq('id', user.id)
-        .single();
+  //   async function getProfile() {
+  //     setLoading(true);
+  //     const { user } = session || { user: { id: '', email: '' } };
 
-      if (!ignore) {
-        if (error) {
-          console.warn(error);
-        } else if (data) {
-          setUsername(data.username);
-          setWebsite(data.website);
-          setAvatarUrl(data.avatar_url);
-        }
-      }
+  //     const { data, error } = await supabase
+  //       .from('profiles')
+  //       .select('username, website')
+  //       .eq('id', user.id)
+  //       .single();
 
-      setLoading(false);
-    }
+  //     if (!ignore) {
+  //       if (error) {
+  //         console.warn(error);
+  //       } else if (data) {
+  //         setUsername(data.username);
+  //         setWebsite(data.website);
+  //       }
+  //     }
 
-    getProfile();
+  //     setLoading(false);
+  //   }
 
-    return () => {
-      ignore = true;
-    };
-  }, [session]);
+  //   /*if (session) {
+  //     getProfile();
+  //   } else {
+  //     setLoading(false); // Si no hay sesión, no se carga el perfil
+  //   }*/
 
-  async function updateProfile(event, newAvatarUrl = null) {
-    event.preventDefault();
+  //   return () => {
+  //     ignore = true;
+  //   };
+  // }, [session]);
 
-    setLoading(true);
-    const { user } = session;
+  // if (loading) {
+  //   return <div>Loading...</div>; // Muestra un mensaje de carga
+  // }
 
-    const updates = {
-      id: user.id,
-      username,
-      website,
-      avatar_url: newAvatarUrl || avatar_url,
-      updated_at: new Date(),
-    };
-
-    const { error } = await supabase.from('profiles').upsert(updates);
-
-    if (error) {
-      alert(error.message);
-    } else {
-      if (newAvatarUrl) setAvatarUrl(newAvatarUrl);
-    }
-    setLoading(false);
-  }
+  // if (!session) {
+  //   return <div>No hay sesión activa.</div>; // Mensaje si no hay sesión
+  // }
 
   return (
-    <form onSubmit={(e) => updateProfile(e)} className="form-widget">
-      <Avatar
-        url={avatar_url}
-        size={150}
-        onUpload={(newUrl) => {
-          updateProfile({ preventDefault: () => {} }, newUrl);
-        }}
-      />
+    <div className="account-container">
+      <img src={foto} alt="Foto" className="perfil-image" />
       <div>
         <label htmlFor="email">Email</label>
         <input id="email" type="text" value={session.user.email} disabled />
@@ -85,9 +63,8 @@ export default function Account({ session }) {
         <input
           id="username"
           type="text"
-          required
           value={username || ''}
-          onChange={(e) => setUsername(e.target.value)}
+          disabled // Elimina la capacidad de editar
         />
       </div>
       <div>
@@ -96,24 +73,9 @@ export default function Account({ session }) {
           id="website"
           type="url"
           value={website || ''}
-          onChange={(e) => setWebsite(e.target.value)}
+          disabled // Elimina la capacidad de editar
         />
       </div>
-
-      <div>
-        <button className="button block primary" type="submit" disabled={loading}>
-          {loading ? 'Loading ...' : 'Update'}
-        </button>
-      </div>
-    </form>
+    </div>
   );
 }
-
-Account.propTypes = {
-  session: PropTypes.shape({
-    user: PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      email: PropTypes.string.isRequired,
-    }).isRequired,
-  }).isRequired,
-};
