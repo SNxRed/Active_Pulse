@@ -1,26 +1,57 @@
 import "./styles/reviews.css";
 import Review_Score from "./components/review_score";
-export default function reviews() {
+import { useState, useEffect } from "react";
+import { supabase } from "./supabaseClient";
+
+export default function Reviews() {
+  const [reviews, setReviews] = useState([]); // Estado para almacenar los testimonios
+
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("testimonials")
+          .select("")
+          .order("created_at", { ascending: false }); // Ordenar por fecha de creación, más recientes primero
+
+        if (error) {
+          console.error("Error al obtener testimonios:", error);
+          return;
+        }
+        console.log(data)
+        setReviews(data); // Guardar los testimonios en el estado
+      } catch (error) {
+        console.error("Error al conectarse a la base de datos:", error.message);
+      }
+    };
+
+    fetchReviews();
+  }, []);
+
   return (
     <section id="reviews-container">
-      {Array.from({ length: 10 }, (_, index) => (
-        <div className="card">
-          <div className="card-header">
-            <span className="date-time">2 day ago</span>
-            <Review_Score score={4} />
-          </div>
+      {reviews.length > 0 ? (
+        reviews.map((review, index) => (
+          <div className="card" key={index}>
+            <div className="card-header">
 
-          <p className="description">
-            “Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae
-            quas vel sint commodi repudiandae consequuntur.”
-          </p>
+              <span className="date-time">{new Date(review.created_at).toLocaleDateString()}</span>
+              <Review_Score score={review.score} />
+            </div>
 
-          <div className="author">
-            <span>~</span> <img src="/src/assets/user_icon_2.png" alt="user_icon" width={"21px"} />{" "}
-            John Doe
+            
+            <p className="description">“{review.testimony}”</p>
+
+            <div className="author">
+              <span>~</span>
+              <img src="/src/assets/user_icon_2.png" alt="user_icon" width={"21px"} />{" "}
+              {review.user_email || "Usuario Anónimo"}
+            </div>
           </div>
-        </div>
-      ))}
+        ))
+      ) : (
+        <p className="no-reviews-message">No hay testimonios disponibles.</p>
+      )}
     </section>
   );
 }

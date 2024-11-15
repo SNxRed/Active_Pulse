@@ -92,6 +92,12 @@ function Navbar() {
                 Perfil Admin
               </button>
             {/* )} */}
+            <button onClick={() => navigate('/reviews')} className="navbar-button">
+              Ver testimonios
+            </button>
+            <button onClick={() => navigate('/create_review')} className="navbar-button">
+              Crear testimonio
+            </button>
             <button onClick={handleSignOut} className="navbar-button">
           Cerrar sesión
         </button>
