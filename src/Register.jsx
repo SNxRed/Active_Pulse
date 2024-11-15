@@ -70,21 +70,7 @@ export default function SignUp() {
     const uppercaseRequirement = /[A-Z]/.test(password);
     const numberRequirement = /[0-9]/.test(password);
     const specialCharRequirement = /[!@#$%^&*]/.test(password);
-
-    setPasswordValid(
-      lengthRequirement &&
-        uppercaseRequirement &&
-        numberRequirement &&
-        specialCharRequirement
-    );
-  };
-
-  const validatePassword = (password) => {
-    const lengthRequirement = password.length >= 8;
-    const uppercaseRequirement = /[A-Z]/.test(password);
-    const numberRequirement = /[0-9]/.test(password);
-    const specialCharRequirement = /[!@#$%^&*]/.test(password);
-
+  
     setPasswordValid(
       lengthRequirement &&
         uppercaseRequirement &&
