@@ -82,14 +82,20 @@ function Navbar() {
             <button onClick={() => navigate("/user")} className="navbar-button">
               Inicio
             </button>
-            <button
-              onClick={() => navigate("/admin")}
-              className="navbar-button"
-            >
-              Invitar cliente
+            {/* {isAdmin && ( */}
+              <button onClick={() => navigate('/admin')} className="navbar-button">
+                Invitar cliente
+              </button>
+              <button onClick={() => navigate('/')} className="navbar-button">
+                Perfil Admin
+              </button>
+            {/* )} */}
+            <button onClick={() => navigate('/reviews')} className="navbar-button">
+              Ver testimonios
             </button>
-            <button onClick={() => navigate("/")} className="navbar-button">
-              Perfil Admin
+            <button onClick={() => navigate('/create_review')} className="navbar-button">
+              Crear testimonio
+
             </button>
             <button onClick={handleSignOut} className="navbar-button">
               Cerrar sesión
@@ -108,6 +114,9 @@ function Navbar() {
               className="navbar-button"
             >
               Ver testimonios
+            </button>
+            <button onClick={() => navigate('/create_review')} className="navbar-button">
+              Crear testimonio
             </button>
           </>
         )}
