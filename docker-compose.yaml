@@ -1,0 +1,10 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001" # Mapea el puerto 3001 del contenedor al puerto 3001 en localhost
+    volumes:
+      - ./data:/usr/share/nginx/html/assets # Volumen para archivos de usuario o imágenes

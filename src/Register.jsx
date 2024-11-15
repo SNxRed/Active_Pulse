@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { supabase } from "./supabaseClient";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./styles/Register.css";
 
 export default function SignUp() {
@@ -25,8 +25,20 @@ export default function SignUp() {
   const [emergencyContactPhone, setEmergencyContactPhone] = useState("");
 
   const location = useLocation();
+  const navigate = useNavigate(); // Hook para redirección
+
   const queryParams = new URLSearchParams(location.search);
   const invitationId = queryParams.get("invitationId");
+
+  useEffect(() => {
+    const checkSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        navigate("/dashboard"); // Redirige al dashboard o a la página principal si hay una sesión activa
+      }
+    };
+    checkSession();
+  }, [navigate]);
 
   // Verificar la invitación cuando se monta el componente
   useEffect(() => {
@@ -66,19 +78,6 @@ export default function SignUp() {
   }, []); */
 
 
-  const validatePassword = (password) => {
-    const lengthRequirement = password.length >= 8;
-    const uppercaseRequirement = /[A-Z]/.test(password);
-    const numberRequirement = /[0-9]/.test(password);
-    const specialCharRequirement = /[!@#$%^&*]/.test(password);
-
-    setPasswordValid(
-      lengthRequirement &&
-        uppercaseRequirement &&
-        numberRequirement &&
-        specialCharRequirement
-    );
-  };
 
   const handleSignUp = async (event) => {
     event.preventDefault();
@@ -107,12 +106,9 @@ export default function SignUp() {
   
     if (userId) {
       try {
-        const response = await fetch("http://localhost:3001/api/validate-signup", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
+        // Invocar la edgefunction directamente usando supabase.functions.invoke
+        const { data: result, error: functionError } = await supabase.functions.invoke('validate-signup', {
+          body: {
             userId,
             firstName,
             lastName,
@@ -122,28 +118,20 @@ export default function SignUp() {
             gender,
             emergencyContactName,
             emergencyContactPhone,
-          }),
+            invitationId
+          },
         });
   
-        const result = await response.json();
-  
-        if (response.ok) {
-          alert(result.message);
+        if (functionError) {
+          console.error("Error al invocar la edgefunction:", functionError);
+          alert(functionError.message || "Error al crear el perfil de usuario.");
         } else {
-          alert(result.error || "Error al crear el perfil de usuario.");
-        }
-  
-        const { error: updateError } = await supabase
-          .from("invitations")
-          .update({ is_used: true })
-          .eq("id", invitationId);
-  
-        if (updateError) {
-          console.error("Error al actualizar el estado de la invitación:", updateError);
+          alert(result.message || "Perfil de usuario creado exitosamente.");
+          navigate('/'); // Redirige al inicio ("/") después de un registro exitoso
         }
   
       } catch (err) {
-        console.error("Error al invocar la API intermedia:", err);
+        console.error("Error al invocar la edgefunction:", err);
         alert("Error al comunicarse con el servidor.");
       }
     } else {
@@ -187,7 +175,7 @@ export default function SignUp() {
       >
       {/*Logo*/} 
       <img
-      src="/images/logo2.png" // Ajusta la ruta del logo
+      src="/images/logo1.png" // Ajusta la ruta del logo
       alt="Logo Active Pulse"
       style={{
         height: '50px', // Ajusta el tamaño del logo
