@@ -20,7 +20,7 @@ import Perfil from './UserProfile';
 import "./index.css";
 import Reviews from "./reviews";
 import Create_Review from "./create_review";
-
+import Logout from "./Logout";
 
 function App() {
   const [session, setSession] = useState(null);
