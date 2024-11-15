@@ -77,6 +77,7 @@ export default function SignUp() {
     setInvitationValid(true); // Fuerza el formulario a mostrarse
   }, []); */
 
+
   const validatePassword = (password) => {
     const lengthRequirement = password.length >= 8;
     const uppercaseRequirement = /[A-Z]/.test(password);

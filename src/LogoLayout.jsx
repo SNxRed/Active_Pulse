@@ -4,10 +4,10 @@ import Navbar from './components/Navbar';
 
 function LogoLayout({ children }) {
   return (
-    <div>
+    <>
       <Navbar />
       <main>{children}</main>
-    </div>
+    </>
   );
 }
 

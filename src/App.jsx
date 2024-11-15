@@ -12,13 +12,15 @@ import Register from "./Register";
 import Admin from "./Admin";
 import ForgotPassword from "./ForgotPassword";
 import UpdatePassword from "./UpdatePassword";
-import AdminUploadForm from "./AdminUploadForm";
-import MotivationalContent from "./MotivationalContent";
+import AdminUploadForm from './AdminUploadForm';
+import MotivationalContent from './MotivationalContent';
 import LogoLayout from "./LogoLayout";
-import Usuario from "./UserHome";
-import Perfil from "./UserProfile";
-import Logout from "./Logout"; // Importa el componente Logout
+import Usuario from './UserHome';
+import Perfil from './UserProfile';
 import "./index.css";
+import Reviews from "./reviews";
+import Create_Review from "./create_review";
+import Logout from "./Logout";
 
 function App() {
   const [session, setSession] = useState(null);
@@ -76,16 +78,11 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/update-password" element={<UpdatePassword />} />
-          <Route
-            path="/user"
-            element={
-              <LogoLayout>
-                <Usuario />
-              </LogoLayout>
-            }
-          />
-          <Route path="/upload" element={<AdminUploadForm />} />
-          <Route path="/motivation" element={<MotivationalContent />} />
+          <Route path='/user' element={<LogoLayout><Usuario /></LogoLayout>} />
+          <Route path="/upload"element={<AdminUploadForm />} />
+          <Route path="/motivation"element={<MotivationalContent />} />
+          <Route path="/reviews" element={<LogoLayout><Reviews /></LogoLayout>} />
+          <Route path="/create_review" element={<LogoLayout><Create_Review /></LogoLayout>} />
 
           {/* Rutas protegidas */}
           <Route
