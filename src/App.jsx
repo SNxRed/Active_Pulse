@@ -7,6 +7,8 @@ import Register from './Register';
 import Admin from './Admin';
 import ForgotPassword from './ForgotPassword';
 import UpdatePassword from './UpdatePassword';
+import AdminUploadForm from './AdminUploadForm';
+import MotivationalContent from './MotivationalContent';
 import LogoLayout from './LogoLayout';
 import Usuario from './UserHome';
 import Perfil from './UserProfile';
@@ -62,6 +64,8 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/update-password" element={<UpdatePassword />} />
           <Route path='/user' element={<LogoLayout><Usuario /></LogoLayout>} />
+          <Route path="/upload"element={<AdminUploadForm />} />
+          <Route path="/motivation"element={<MotivationalContent />} />
 
           {/* Rutas protegidas */}
           <Route
@@ -76,6 +80,12 @@ function App() {
             path="/userprofile"
             element={session && !isAdmin ? <LogoLayout><Perfil /></LogoLayout> : <Navigate to="/user" replace />} // Redirigir si no tiene sesión o es admin
           />
+
+          <Route
+            path="/admin/upload"
+            element={session ? <LogoLayout><AdminUploadForm /></LogoLayout> : <Navigate to="/login" replace />}
+          />
+
 
           {/* Ruta por defecto */}
           <Route

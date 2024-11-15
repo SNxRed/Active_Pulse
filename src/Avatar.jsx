@@ -28,7 +28,7 @@ export default function Avatar({ url, size, onUpload }) {
       setUploading(true)
 
       if (!event.target.files || event.target.files.length === 0) {
-        throw new Error('You must select an image to upload.')
+        throw new Error('Debes subir una imagen para subir.')
       }
 
       const file = event.target.files[0]
