@@ -70,7 +70,7 @@ export default function Auth() {
           </button>
         </form>
 
-        <div className="auth-oauth">
+        {/* <div className="auth-oauth">
           <button
             className="google-button"
             onClick={() => handleOAuthLogin('google')}
@@ -83,15 +83,15 @@ export default function Auth() {
             />
             <span>Iniciar sesión con Google</span>
           </button>
-        </div>
+        </div> */}
 
         <div className="extra-options">
           <button className="link-button" onClick={handleForgotPassword}>
             ¿Olvidaste tu contraseña?
           </button>
-          <button className="link-button" onClick={() => navigate('/user')}>
+          {/* <button className="link-button" onClick={() => navigate('/user')}>
             Ingresar como invitado
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

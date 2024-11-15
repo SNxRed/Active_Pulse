@@ -79,6 +79,20 @@ export default function SignUp() {
     );
   };
 
+  const validatePassword = (password) => {
+    const lengthRequirement = password.length >= 8;
+    const uppercaseRequirement = /[A-Z]/.test(password);
+    const numberRequirement = /[0-9]/.test(password);
+    const specialCharRequirement = /[!@#$%^&*]/.test(password);
+
+    setPasswordValid(
+      lengthRequirement &&
+        uppercaseRequirement &&
+        numberRequirement &&
+        specialCharRequirement
+    );
+  };
+
   const handleSignUp = async (event) => {
     event.preventDefault();
   
@@ -218,6 +232,7 @@ export default function SignUp() {
           required
         />
        
+
         <input
           className="inputField"
           type="tel"
@@ -232,8 +247,7 @@ export default function SignUp() {
           placeholder="Dirección"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
-        />
-      
+        />      
        
       <input
         className="inputField"
@@ -270,7 +284,7 @@ export default function SignUp() {
         onChange={(e) => setEmergencyContactPhone(e.target.value)}
       />
    
-       
+      
         <input
           className="inputField"
           type="password"
@@ -311,7 +325,6 @@ export default function SignUp() {
           }}
           required
         />
-        
         {!passwordsMatch && (
           <p className="error">Las contraseñas no coinciden</p>
         )}
@@ -319,14 +332,7 @@ export default function SignUp() {
         <button className="button" disabled={loading || !passwordValid}>
           {loading ? <span>Cargando...</span> : <span>Registrarse</span>}
         </button>
-
-
-
-
       </form>
-
-      
-
     </div>
     <div className="background-images">
   <img src="/images/logo3.1.png" alt="Esquina izquierda" className="corner-image left" />
@@ -336,3 +342,4 @@ export default function SignUp() {
     </div>
   );
 }
+
