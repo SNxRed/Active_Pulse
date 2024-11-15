@@ -1,15 +1,22 @@
 import { useState, useEffect } from 'react';
 import { supabase } from './supabaseClient';
 import { useNavigate } from 'react-router-dom';
-import './index.css';
+import './styles/UpdatePassword.css';
 
 export default function UpdatePassword() {
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] =useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleUpdatePassword = async (event) => {
     event.preventDefault();
+
+    if (password!==confirmPassword){
+      alert('Las contraseñas no coinciden. Por favor, intenta nuevamente');
+      return;
+    }
+
     setLoading(true);
 
     const { error } = await supabase.auth.updateUser({ password });
@@ -28,12 +35,12 @@ export default function UpdatePassword() {
 
 
 
-  /*useEffect(() => {
+    useEffect(() => {
     // Saltar la verificación de sesión en modo desarrollo
     console.log("Modo desarrollo: omitiendo verificación de sesión.");
-  }, []); */
+  }, []); 
 
- useEffect(() => {
+ /*useEffect(() => {
 
     // Si el usuario no está autenticado, redirigir a la página de inicio de sesión
     const checkSession = async () => {
@@ -43,13 +50,37 @@ export default function UpdatePassword() {
       }
     };
     checkSession();
-  }, [navigate]);
+  }, [navigate]); */
 
   
   return (
+    <>
+    {/* Encabezado*/}
+    <header
+    style={{
+      width: '100%',
+      background: 'linear-gradient(to top, #370061 0%, #7f00b2 100%)',
+      padding: '1rem 2rem',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'flex-start', // Logo y título alineados a la izquierda
+      boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+    }}
+    >
+      {/*Logo*/}
+      <img
+          src="/images/logo1.png" // Ajusta la ruta del logo
+          alt="Logo Active Pulse"
+          style={{
+            height: '100px', // Ajusta el tamaño del logo
+            marginRight: '1rem', // Espacio entre el logo y el título
+          }}
+        />
+    </header>
+      {/*Titulo de la página */}
     <div className="reset-password-container">
       <div className="reset-password-box">
-        <h1 className="header">Establecer Nueva Contraseña</h1>
+        <h1 className="title">Establecer Nueva Contraseña</h1>
         <p className="description">
           Ingresa tu nueva contraseña para actualizar tu cuenta.
         </p>
@@ -62,23 +93,28 @@ export default function UpdatePassword() {
             required
             onChange={(e) => setPassword(e.target.value)}
           />
+
+          <input
+            className="inputfield"
+            type ="password"
+            placeholder="Confirmar contraseña"
+            value={confirmPassword}
+            required
+            onChange={(e)=> setConfirmPassword(e.target.value)}
+            />
           <button className="button" disabled={loading}>
             {loading ? <span>Cargando...</span> : <span>Actualizar Contraseña</span>}
           </button>
         </form>
 
-        <img
-  src="/public/images/logo3.1.png"
-  alt="Descripción de la imagen"
-  style={{
-    width: '100px', 
-    height: 'auto', 
-    borderRadius: '8px', 
-  }}
-/>
-
       </div>
       
+      
     </div>
+    <div className="background-images">
+        <img src="/images/logo3.1.png" alt="Esquina izquierda" className="corner-image left" />
+        <img src="/images/logo3.1.png" alt="Esquina derecha" className="corner-image right" />
+      </div>
+    </>
   );
 }
