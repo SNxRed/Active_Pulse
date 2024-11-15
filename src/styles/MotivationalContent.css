@@ -1,0 +1,156 @@
+/* Global Styles */
+body {
+  font-family: 'Poppins', sans-serif; /* Usa Google Fonts */
+  background: linear-gradient(to bottom, #370061, #510085); /* Fondo degradado */
+  color: white;
+}
+
+/* Header */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+header img {
+  filter: brightness(1.2); /* Resaltar el logo */
+}
+
+/* General Container */
+.motivational-content-container {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #FFFFFF;
+  gap: 2rem;
+}
+
+/* Title */
+.motivational-title {
+  font-family: 'Big Shoulders Display', sans-serif;
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  color: #FFFFFF;
+}
+
+/* Content Sections */
+.content-section {
+  padding: 2rem 1rem;
+  border-radius: 8px;
+  background-color: #f8f8f8; /* Fondo claro */
+  margin-bottom: 2rem;
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+.content-section h2 {
+  color: #370061; /* Títulos visibles */
+  text-transform: uppercase;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Carousel Styles */
+.carousel-container {
+  margin-bottom: 2rem;
+}
+
+.carousel {
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  scroll-snap-type: x mandatory;
+  gap: 1rem;
+}
+
+.carousel-item {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  transition: transform 0.3s ease-in-out;
+  margin: 0 10px;
+}
+
+.carousel-item img,
+.carousel-item video {
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.carousel-item img:hover,
+.carousel-item video:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Grid Layout */
+.content-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  justify-items: center;
+}
+
+.content-card {
+  background-color: white;
+  color: #370061;
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  max-width: 300px;
+}
+
+.content-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.content-image,
+.content-video {
+  width: 100%;
+  border-radius: 8px;
+}
+
+/* Frases Section */
+.frases-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  gap: 1rem;
+  background-color: #370061; /* Fondo morado oscuro */
+}
+
+.frase-card {
+  max-width: 500px;
+  padding: 2rem;
+  border-radius: 10px;
+  background: linear-gradient(to right, #ffffff, #f0f0f0); /* Fondo claro con degradado */
+  color: #370061;
+  font-size: 1.2rem;
+  font-weight: bold;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  line-height: 1.6;
+  transition: all 0.3s ease;
+}
+
+.frase-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
