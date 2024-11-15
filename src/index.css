@@ -141,7 +141,6 @@ h2 {
   justify-content:center;
   min-height: 80vh;
   width: 100%;
-  background-color: #370061;
   font-family: 'Montserrat', sans-serif;
   padding-left: 20px;
   margin-top: 20px;
@@ -292,7 +291,6 @@ button:focus-visible {
   gap: 15px;
 }
 
-
 .navbar-button {
   background-color: #370061;
   color: #FFFFFF;
@@ -323,36 +321,47 @@ button:focus-visible {
 }
 
 .user-container {
-  max-width: 120vh; /* Puedes ajustar esto si es necesario */
   margin: 0 auto;
   padding: 20px;
   text-align: justify;
+  max-width: 85%;
 }
 
 .services-section {
   display: flex;
   overflow-x: auto; /* Permite el desplazamiento horizontal */
-  gap: 30px; /* Aumentar el espacio entre tarjetas si es necesario */
   margin-top: 20px;
+  /* padding: 10px; Espaciado interno para que las tarjetas no toquen los bordes */
+  scrollbar-width: none; /* Para Firefox */
+}
+
+/* Para navegadores WebKit (Chrome, Safari) */
+.services-section::-webkit-scrollbar {
+  display: none; /* Oculta la barra de desplazamiento */
 }
 
 .service-card {
-  border: 1px solid #ddd;
-  padding: 20px; /* Aumentar el padding para un mejor diseño */
-  border-radius: 8px;
-  width: 100vh; /* Aumentar el ancho de las tarjetas */
-  display: flex; /* Para alinear el contenido y la imagen */
-  flex-direction: column; /* Asegurar que la imagen esté debajo del texto */
-  align-items: center; /* Centrar el contenido */
+  display: flex;
+  flex-direction: column; /* Asegúrate de que la imagen esté arriba del texto */
+  align-items: center; /* Centra el contenido horizontalmente */
+  margin: 20px; /* Espaciado entre tarjetas */
+  border: 2px solid #ccc; /* Borde alrededor de la tarjeta */
+  border-radius: 8px; /* Bordes redondeados */
+  overflow: hidden; /* Asegúrate de que el contenido no se desborde */
+  width: 500px; /* Ancho fijo para todas las tarjetas */
 }
 
 .service-image {
-  width: 100%; /* Ancho fijo para la imagen */
-  height: auto; /* Mantiene la proporción de la imagen */
-  border-radius: 8px;
-  border: 2px solid;
-  margin-top: 10px; /* Espacio entre el texto y la imagen */
-  flex: 1;
+  width: 100%; /* Ancho completo de la tarjeta */
+  height: 500px; /* Alto fijo para la imagen */
+  object-fit: cover; /* Mantiene la proporción de la imagen */
+  border: 1px solid;
+  border-radius: 8px;;
+}
+
+.service-text {
+  padding: 10px; /* Espaciado interno */
+  text-align: justify; /* Centra el texto dentro de la tarjeta */
 }
 
 .action-section {
@@ -371,8 +380,8 @@ button:focus-visible {
 }
 
 .contact-image {
-  width: 30%;
-  height: 60%;
+  width: 20%;
+  height: 40%;
   border-radius: 10px;
   border: 2px solid;
 }

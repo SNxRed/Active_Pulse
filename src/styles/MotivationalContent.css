@@ -1,9 +1,4 @@
 /* Global Styles */
-body {
-  font-family: 'Poppins', sans-serif; /* Usa Google Fonts */
-  background: linear-gradient(to bottom, #370061, #510085); /* Fondo degradado */
-  color: white;
-}
 
 /* Header */
 header {
