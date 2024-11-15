@@ -107,6 +107,9 @@ function Navbar() {
             <button onClick={() => navigate('/reviews')} className="navbar-button">
               Ver testimonios
             </button>
+            <button onClick={() => navigate('/create_review')} className="navbar-button">
+              Crear testimonio
+            </button>
           </>
         )}
       </div>
