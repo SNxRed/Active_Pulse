@@ -59,7 +59,25 @@ export default function SignUp() {
     };
 
     verifyInvitation();
-  }, [invitationId]);
+  }, [invitationId]); 
+
+  /*useEffect(() => {
+    setInvitationValid(true); // Fuerza el formulario a mostrarse
+  }, []); */
+
+  const validatePassword = (password) => {
+    const lengthRequirement = password.length >= 8;
+    const uppercaseRequirement = /[A-Z]/.test(password);
+    const numberRequirement = /[0-9]/.test(password);
+    const specialCharRequirement = /[!@#$%^&*]/.test(password);
+
+    setPasswordValid(
+      lengthRequirement &&
+        uppercaseRequirement &&
+        numberRequirement &&
+        specialCharRequirement
+    );
+  };
 
   const validatePassword = (password) => {
     const lengthRequirement = password.length >= 8;
@@ -166,11 +184,37 @@ export default function SignUp() {
   }
 
   return (
+
+    <div>
+      {/*Encabezado*/}
+      <header
+      style={{
+        width: '100%',
+        background: 'linear-gradient(to bottom, #7f00b2, #510085)', // Degradado
+        padding: '1rem 2rem',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-start', // Logo y título alineados a la izquierda
+        boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+      }}
+      >
+      {/*Logo*/} 
+      <img
+      src="/images/logo2.png" // Ajusta la ruta del logo
+      alt="Logo Active Pulse"
+      style={{
+        height: '50px', // Ajusta el tamaño del logo
+        marginRight: '1rem', // Espacio entre el logo y el título
+      }}
+    />
+      </header>
+
+    {/*Formulario*/}
     <div className="form-container">
-      <h1 className="header">Registrate en Active Pulse</h1>
-      <form onSubmit={handleSignUp}>
-        {/* Campos de perfil */}
-        <input
+      <h1 className="form-title"> Regístrate en Active Pulse </h1>
+      <form onSubmit={handleSignUp} className= "form-grid">
+      
+        <input 
           className="inputField"
           type="text"
           placeholder="Nombre"
@@ -178,6 +222,7 @@ export default function SignUp() {
           onChange={(e) => setFirstName(e.target.value)}
           required
         />
+
         <input
           className="inputField"
           type="text"
@@ -186,6 +231,8 @@ export default function SignUp() {
           onChange={(e) => setLastName(e.target.value)}
           required
         />
+       
+
         <input
           className="inputField"
           type="tel"
@@ -200,42 +247,44 @@ export default function SignUp() {
           placeholder="Dirección"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
-        />
-        <input
-          className="inputField"
-          type="date"
-          placeholder="Fecha de Nacimiento"
-          value={dateOfBirth}
-          onChange={(e) => setDateOfBirth(e.target.value)}
-          required
-        />
-        <select
-          className="inputField"
-          value={gender}
-          onChange={(e) => setGender(e.target.value)}
-          required
-        >
-          <option value="">Género</option>
-          <option value="male">Masculino</option>
-          <option value="female">Femenino</option>
-          <option value="other">Otro</option>
-        </select>
-        <input
-          className="inputField"
-          type="text"
-          placeholder="Nombre de Contacto de Emergencia"
-          value={emergencyContactName}
-          onChange={(e) => setEmergencyContactName(e.target.value)}
-        />
-        <input
-          className="inputField"
-          type="tel"
-          placeholder="Teléfono de Contacto de Emergencia"
-          value={emergencyContactPhone}
-          onChange={(e) => setEmergencyContactPhone(e.target.value)}
-        />
-
-        {/* Campo de contraseña */}
+        />      
+       
+      <input
+        className="inputField"
+        type="date"
+        placeholder="Fecha de Nacimiento"
+        value={dateOfBirth}
+        onChange={(e) => setDateOfBirth(e.target.value)}
+        required
+      />
+      <select
+        className="inputField"
+        value={gender}
+        onChange={(e) => setGender(e.target.value)}
+        required
+      >
+        <option value="">Género</option>
+        <option value="male">Masculino</option>
+        <option value="female">Femenino</option>
+        <option value="other">Otro</option>
+      </select>
+   
+      <input
+        className="inputField"
+        type="text"
+        placeholder="Nombre de Contacto de Emergencia"
+        value={emergencyContactName}
+        onChange={(e) => setEmergencyContactName(e.target.value)}
+      />
+      <input
+        className="inputField"
+        type="tel"
+        placeholder="Teléfono de Contacto de Emergencia"
+        value={emergencyContactPhone}
+        onChange={(e) => setEmergencyContactPhone(e.target.value)}
+      />
+   
+      
         <input
           className="inputField"
           type="password"
@@ -249,7 +298,7 @@ export default function SignUp() {
           }}
           required
         />
-        {showPasswordPopup && (
+       {showPasswordPopup && (
           <div className="password-popup">
             <p className={password.length >= 8 ? "valid" : "invalid"}>
               Mínimo 8 caracteres
@@ -264,7 +313,7 @@ export default function SignUp() {
               Al menos un carácter especial
             </p>
           </div>
-        )}
+        )} 
         <input
           className="inputField"
           type="password"
@@ -285,5 +334,12 @@ export default function SignUp() {
         </button>
       </form>
     </div>
+    <div className="background-images">
+  <img src="/images/logo3.1.png" alt="Esquina izquierda" className="corner-image left" />
+  <img src="/images/logo3.1.png" alt="Esquina derecha" className="corner-image right" />
+</div>
+
+    </div>
   );
 }
+

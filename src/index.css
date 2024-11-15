@@ -37,6 +37,7 @@ h2 {
   font-family: 'BIG SHOULDER DISPLAY', sans-serif;
   color: #032246; 
 }
+
 /* Estilo de la caja de autenticaciÃ³n */
 .auth-box {
   width: 100%;
@@ -200,7 +201,7 @@ body {
   align-items: center;
   min-width: 320px;
   min-height: 100vh;
-  background-color: #370061;
+  background-color: #7f00b2;
 }
 
 h1 {
@@ -315,23 +316,6 @@ button:focus-visible {
   gap: 15px;
 }
 
-.reset-password-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  
-}
-
-.reset-password-box {
-  background-color: #fff;
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  width: 100%;
-  max-width: 400px;
-  text-align: center;
-}
 
 .navbar-button {
   background-color: #7f00b2;

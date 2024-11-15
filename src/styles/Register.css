@@ -23,25 +23,107 @@
   }
   
   .button {
+    grid-column: span 2;
     width: 100%;
-    padding: 12px;
-    background-color: #28a745;
+    padding: 15px;
+    background-color: #008F38;;
+    color:#370061;
     color: white;
     border: none;
     border-radius: 4px;
+    font-size: 1.2rem;
     cursor: pointer;
+    font-weight: bold;
   }
   
   .button:disabled {
-    background-color: #c3e6cb;
+    background-color: #008F38; /* Fondo dorado apagado */
     cursor: not-allowed;
+  }
+
+  .button:hover{
+    background-color:#46b26f; ;
   }
   
   .form-container {
-    max-width: 400px;
+    max-width: 700px;
     margin: auto;
     padding: 20px;
-    border: 1px solid #ddd;
+    /*border: 1px solid #ddd;*/
     border-radius: 8px;
-    background-color: #f9f9f9;
+    /*background-color: #f9f9f9;*/
+  }
+
+  .header {
+    background: linear-gradient(to bottom, #7f00b2, #510085); /* Degradado */
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Alineado a la izquierda */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+  }
+  .form-title {
+    font-family: 'Big Shoulders Display', sans-serif;
+    font-size: 2rem;
+    color: #FFFFFF; /* Texto blanco */
+    margin-bottom: 1rem;
+    text-align: center; 
+  }
+  
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Dos columnas iguales */
+    gap: 20px; /* Espacio entre columnas y filas */
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .inputField {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #7f00b2; /* Bordes púrpuras */
+    border-radius: 4px;
+    font-size: 1rem;
+    background-color: #FFFFFF; /* Fondo blanco */
+    color: #370061; /* Texto púrpura oscuro */
+  }
+  
+
+  .inputField::placeholder {
+    color: #7f00b2; /* Placeholder púrpura claro */
+  }
+
+  .inputField:focus {
+    outline: none;
+    border-color: #008F38; /* Bordes dorados al enfocar */
+  }
+
+  .background-images {
+    position: relative; /* Para manejar las posiciones de las imágenes */
+  }
+
+  .corner-image {
+    position: absolute;
+    width: 300px; /* Ajusta el tamaño según sea necesario */
+    height: auto; /* Mantiene la proporción */
+    z-index: 1;
+    opacity: 0.5;
+    
+  }
+  
+  .corner-image.left {
+    bottom: 100px;
+    left: 70px; /* Esquina inferior izquierda */
+  }
+  
+  .corner-image.right {
+    bottom: 100px;
+    right: 70px; /* Esquina inferior derecha */
   }
