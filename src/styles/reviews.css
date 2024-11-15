@@ -1,0 +1,75 @@
+
+#reviews-container{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 300px));
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    min-height: 100%;
+    width: 100%;
+    padding: 3rem;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #2a004e;
+    border-radius: 0.5rem;
+    border: 1px solid #7f00b2;
+    padding: 1rem;
+    max-width: 320px;
+    max-height: 320px;
+
+    transition: box-shadow 100ms linear;
+  }
+  .card:hover{
+    box-shadow: 0px 4px 16px #7f00b2;
+  }
+  
+  .stars {
+    display: flex;
+    gap: 0.125rem;
+    color: rgb(238, 203, 8);
+  }
+  
+  .svg-star {
+    height: 1.25rem;
+    width: 1.5rem;
+    cursor: pointer;
+  }
+  .card-header{
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .date-time {
+    display: flex;
+    align-items: center;
+    color: #9d62b4;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+  
+  .description {
+    font-style: italic;
+    padding: 0 1rem 0 1rem;
+    line-height: 1.625;
+    color: rgb(231, 222, 222);
+  }
+  
+  .author {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    color: #943eb6;
+    font-style: italic;
+    font-weight: 600;
+  }
+
+  span{
+    font-style: italic;
+    font-size: 1.25rem;
+  }

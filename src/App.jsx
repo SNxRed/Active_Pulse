@@ -1,18 +1,20 @@
-import { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import { supabase } from './supabaseClient';
-import Auth from './Auth';
-import Account from './Account';
-import Register from './Register';
-import Admin from './Admin';
-import ForgotPassword from './ForgotPassword';
-import UpdatePassword from './UpdatePassword';
+import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import { supabase } from "./supabaseClient";
+import Auth from "./Auth";
+import Account from "./Account";
+import Register from "./Register";
+import Admin from "./Admin";
+import ForgotPassword from "./ForgotPassword";
+import UpdatePassword from "./UpdatePassword";
 import AdminUploadForm from './AdminUploadForm';
 import MotivationalContent from './MotivationalContent';
-import LogoLayout from './LogoLayout';
+import LogoLayout from "./LogoLayout";
 import Usuario from './UserHome';
 import Perfil from './UserProfile';
-import './index.css';
+import "./index.css";
+import Reviews from "./reviews";
+import Create_Review from "./create_review";
 
 function App() {
   const [session, setSession] = useState(null);
@@ -66,6 +68,8 @@ function App() {
           <Route path='/user' element={<LogoLayout><Usuario /></LogoLayout>} />
           <Route path="/upload"element={<AdminUploadForm />} />
           <Route path="/motivation"element={<MotivationalContent />} />
+          <Route path="/reviews" element={<LogoLayout><Reviews /></LogoLayout>} />
+          <Route path="/create_review" element={<LogoLayout><Create_Review /></LogoLayout>} />
 
           {/* Rutas protegidas */}
           <Route
