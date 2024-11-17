@@ -15,7 +15,7 @@ export default function ForgotPassword() {
     });
 
     if (error) {
-      alert(error.error_description || error.message);
+      toast.error(error.error_description || error.message);
     } else {
       setMessage('Password reset email has been sent.');
     }

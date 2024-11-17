@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from './supabaseClient';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Auth() {
   const [loading, setLoading] = useState(false);
@@ -22,9 +24,9 @@ export default function Auth() {
     const { error } = await supabase.auth.signInWithPassword({ email, password });
 
     if (error) {
-      alert(error.error_description || error.message);
+      toast.error(error.error_description || error.message);
     } else {
-      alert('¡Inicio de sesión exitoso!');
+      toast.success('¡Inicio de sesión exitoso!');
       navigate('/');
     }
     setLoading(false);
@@ -38,7 +40,9 @@ export default function Auth() {
     setLoading(true);
     const { error } = await supabase.auth.signInWithOAuth({ provider });
     if (error) {
-      alert(error.message);
+      toast.error(error.message);
+    } else {
+      toast.success(`Inicio de sesión con ${provider} exitoso`); // Notificación para inicio con OAuth
     }
     setLoading(false);
   };
@@ -89,9 +93,9 @@ export default function Auth() {
           <button className="link-button" onClick={handleForgotPassword}>
             ¿Olvidaste tu contraseña?
           </button>
-          {<button className="link-button" onClick={() => navigate('/user')}>
+          <button className="link-button" onClick={() => navigate('/user')}>
             Ingresar como invitado
-          </button>}
+          </button>
         </div>
       </div>
     </div>

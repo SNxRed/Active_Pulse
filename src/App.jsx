@@ -21,6 +21,8 @@ import "./index.css";
 import Reviews from "./reviews";
 import Create_Review from "./create_review";
 import Logout from "./Logout";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const [session, setSession] = useState(null);
@@ -68,6 +70,7 @@ function App() {
 
   return (
     <Router>
+      <ToastContainer position="top-right" autoClose={5000} />
       <div className="container">
         <Routes>
           {/* Rutas públicas */}
@@ -88,7 +91,7 @@ function App() {
           <Route
             path="/"
             element={
-              session /*&& isAdmin*/ ? (
+              session ? (
                 <LogoLayout>
                   <Account key={session.user.id} session={session} />
                 </LogoLayout>
@@ -100,7 +103,7 @@ function App() {
           <Route
             path="/admin"
             element={
-              session /*&& isAdmin*/ ? (
+              session && isAdmin ? (
                 <LogoLayout>
                   <Admin />
                 </LogoLayout>
@@ -124,7 +127,7 @@ function App() {
           <Route
             path="/admin/upload"
             element={
-              session ? (
+              session && isAdmin ? (
                 <LogoLayout>
                   <AdminUploadForm />
                 </LogoLayout>
