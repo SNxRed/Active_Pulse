@@ -89,7 +89,7 @@ export default function AdminUploadForm() {
                 }}
             >
                 <img
-                    src="/images/logo1.png"
+                    src="https://ymjjininyltkzfajvwvd.supabase.co/storage/v1/object/public/uploads/public/Images/logo-main.png"
                     alt="Logo Active Pulse"
                     style={{
                         height: "100px",
@@ -102,27 +102,51 @@ export default function AdminUploadForm() {
                 <h1 className="admin-options-title">¿Qué quieres subir hoy?</h1>
                 <div className="admin-options">
                     <button className="admin-option" onClick={() => openModal("Frases Motivacionales")}>
-                        <img src="/images/text.png" alt="Frases" className="option-icon" />
+                        <img
+                            src="https://ymjjininyltkzfajvwvd.supabase.co/storage/v1/object/public/uploads/public/Images/icon-motivational-phrases.png"
+                            alt="Frases"
+                            className="option-icon"
+                        />
                         <span>Frases Motivacionales</span>
                     </button>
                     <button className="admin-option" onClick={() => openModal("Imágenes Motivacionales")}>
-                        <img src="/images/image.png" alt="Imágenes" className="option-icon" />
+                        <img
+                            src="https://ymjjininyltkzfajvwvd.supabase.co/storage/v1/object/public/uploads/public/Images/icon-motivational-images.png"
+                            alt="Imágenes"
+                            className="option-icon"
+                        />
                         <span>Imágenes Motivacionales</span>
                     </button>
                     <button className="admin-option" onClick={() => openModal("Videos Motivacionales")}>
-                        <img src="/images/video.png" alt="Videos" className="option-icon" />
+                        <img
+                            src="https://ymjjininyltkzfajvwvd.supabase.co/storage/v1/object/public/uploads/public/Images/icon-motivational-videos.png"
+                            alt="Videos"
+                            className="option-icon"
+                        />
                         <span>Videos Motivacionales</span>
                     </button>
                     <button className="admin-option" onClick={() => openModal("Otros")}>
-                        <img src="/images/other.png" alt="Otros" className="option-icon" />
+                        <img
+                            src="https://ymjjininyltkzfajvwvd.supabase.co/storage/v1/object/public/uploads/public/Images/icon-other-content.png"
+                            alt="Otros"
+                            className="option-icon"
+                        />
                         <span>Otros</span>
                     </button>
                 </div>
             </div>
 
             <div className="background-images">
-                <img src="/images/logo3.1.png" alt="Esquina izquierda" className="corner-image left" />
-                <img src="/images/logo3.1.png" alt="Esquina derecha" className="corner-image right" />
+                <img
+                    src="https://ymjjininyltkzfajvwvd.supabase.co/storage/v1/object/public/uploads/public/Images/corner-logo.png"
+                    alt="Esquina izquierda"
+                    className="corner-image left"
+                />
+                <img
+                    src="https://ymjjininyltkzfajvwvd.supabase.co/storage/v1/object/public/uploads/public/Images/corner-logo.png"
+                    alt="Esquina derecha"
+                    className="corner-image right"
+                />
             </div>
 
             {selectedOption && (

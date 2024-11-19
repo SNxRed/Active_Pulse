@@ -80,12 +80,20 @@ export default function Create_Review() {
     return (
         <section id="create-review-container">
             <div id="create-review-header">
-                <img src="/src/assets/write_icon.png" alt="write_icon" width={"41px"} />
+                <img 
+                    src="https://ymjjininyltkzfajvwvd.supabase.co/storage/v1/object/public/uploads/public/Images/icon-write-testimony.png" 
+                    alt="write_icon" 
+                    width={"41px"} 
+                />
                 <span>Dejar testimonio</span>
             </div>
             <div id="score-container">
                 <div id="user-container">
-                    <img src="/src/assets/user_icon_2.png" alt="user_icon" width={"25px"} />
+                    <img 
+                        src="https://ymjjininyltkzfajvwvd.supabase.co/storage/v1/object/public/uploads/public/Images/icon-user-default.png" 
+                        alt="user_icon" 
+                        width={"25px"} 
+                    />
                     <span>{user ? user.email : "Invitado"}</span>
                 </div>
                 <Review_Score score={score} Handle_Score_Change={handleScoreChange} />

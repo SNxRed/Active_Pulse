@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../supabaseClient";
-import logo from "../assets/Captura de pantalla 2024-11-04 155855.png";
 
 function Navbar() {
   const navigate = useNavigate();
@@ -46,7 +45,11 @@ function Navbar() {
 
   return (
     <nav className="navbar">
-      <img src={logo} alt="Active Pulse Logo" className="navbar-logo" />
+      <img
+        src="https://ymjjininyltkzfajvwvd.supabase.co/storage/v1/object/public/uploads/public/Images/logo-main.png"
+        alt="Active Pulse Logo"
+        className="navbar-logo"
+      />
       <div className="navbar-buttons">
         {user ? (
           <>

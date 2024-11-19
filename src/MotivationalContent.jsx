@@ -57,14 +57,13 @@ export default function MotivationalContent() {
         }}
       >
         <img
-          src="/images/logo1.png"
+          src="https://ymjjininyltkzfajvwvd.supabase.co/storage/v1/object/public/uploads/public/Images/logo-main.png"
           alt="Logo Active Pulse"
           style={{
             height: '100px',
             marginRight: '1rem',
           }}
         />
-        
       </header>
 
       <div className="motivational-content-container">
@@ -145,9 +144,17 @@ export default function MotivationalContent() {
         )}
       </div>
       <div className="background-images">
-                <img src="/images/logo3.1.png" alt="Esquina izquierda" className="corner-image left" />
-                <img src="/images/logo3.1.png" alt="Esquina derecha" className="corner-image right" />
-            </div>
+        <img
+          src="https://ymjjininyltkzfajvwvd.supabase.co/storage/v1/object/public/uploads/public/Images/corner-logo.png"
+          alt="Esquina izquierda"
+          className="corner-image left"
+        />
+        <img
+          src="https://ymjjininyltkzfajvwvd.supabase.co/storage/v1/object/public/uploads/public/Images/corner-logo.png"
+          alt="Esquina derecha"
+          className="corner-image right"
+        />
+      </div>
     </>
   );
 }

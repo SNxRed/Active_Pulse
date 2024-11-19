@@ -178,8 +178,8 @@ export default function SignUp() {
           boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
         }}
       >
-        <img
-          src="/images/logo1.png"
+       <img
+          src="https://ymjjininyltkzfajvwvd.supabase.co/storage/v1/object/public/uploads/public/Images/logo-main.png"
           alt="Logo Active Pulse"
           style={{
             height: '50px',
