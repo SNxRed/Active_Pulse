@@ -76,28 +76,6 @@ export default function AdminUploadForm() {
 
     return (
         <>
-            {/* Encabezado */}
-            <header
-                style={{
-                    width: "100%",
-                    background: "linear-gradient(to top, #370061 0%, #7f00b2 100%)",
-                    padding: "1rem 2rem",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "flex-start",
-                    boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
-                }}
-            >
-                <img
-                    src="https://ymjjininyltkzfajvwvd.supabase.co/storage/v1/object/public/uploads/public/Images/logo-main.png"
-                    alt="Logo Active Pulse"
-                    style={{
-                        height: "100px",
-                        marginRight: "1rem",
-                    }}
-                />
-            </header>
-
             <div className="admin-options-container">
                 <h1 className="admin-options-title">¿Qué quieres subir hoy?</h1>
                 <div className="admin-options">
