@@ -25,6 +25,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import BookingCalendar from "./BookingCalendar";
 import AdminPanel from "./AdminPanel";
+import User_list from "./user_list";
 
 function App() {
   const [session, setSession] = useState(null);
@@ -190,6 +191,18 @@ function App() {
               session /*&& isAdmin*/ ? (
                 <LogoLayout>
                   <AdminPanel adminId={session?.user?.id} />
+                </LogoLayout>
+              ) : (
+                <Navigate to="/login" replace />
+              )
+            }
+          />
+          <Route
+            path="/user_list"
+            element={
+              session /*&& isAdmin*/ ? (
+                <LogoLayout>
+                  <User_list adminId={session?.user?.id} />
                 </LogoLayout>
               ) : (
                 <Navigate to="/login" replace />

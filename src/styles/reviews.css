@@ -51,11 +51,11 @@
     font-weight: 600;
   }
   
-  .description {
+  .testimony {
     font-style: italic;
     padding: 0;
     line-height: 1.625;
-    color: rgb(231, 222, 222);
+    color: #e7dede;
   }
   
   .author {
