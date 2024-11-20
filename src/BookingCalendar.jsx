@@ -13,6 +13,7 @@ function BookingCalendar({ userId, userEmail: propUserEmail }) {
   const [userEmail, setUserEmail] = useState(propUserEmail || null);
 
   useEffect(() => {
+
     // Obtener el correo desde la sesión si no se pasa como prop
     const fetchUserEmail = async () => {
       if (!propUserEmail) {
@@ -20,7 +21,9 @@ function BookingCalendar({ userId, userEmail: propUserEmail }) {
           await supabase.auth.getSession();
         if (sessionError) {
           console.error("Error obteniendo la sesión:", sessionError.message);
-          toast.error("No se pudo obtener la información de la sesión.");
+          toast.error("No se pudo obtener la información de la sesión.", {
+            position: "bottom-right",
+          });
           return;
         }
 
@@ -41,6 +44,9 @@ function BookingCalendar({ userId, userEmail: propUserEmail }) {
     fetchReservations();
   }, [date, userId]);
 
+  useEffect(() => {
+   
+  }, []);
   
 
   const getAccessToken = async () => {
@@ -54,7 +60,9 @@ function BookingCalendar({ userId, userEmail: propUserEmail }) {
       );
       toast.error(
         "No se pudo obtener el token de acceso. Por favor, inicia sesión nuevamente."
-      );
+        , {
+          position: "bottom-right",
+        });
       return null;
     }
 
@@ -64,7 +72,9 @@ function BookingCalendar({ userId, userEmail: propUserEmail }) {
   const sendEmail = async (email, subject, html) => {
     if (!email) {
       console.error("Correo destinatario no válido:", email);
-      toast.error("No se pudo enviar el correo. El destinatario es inválido.");
+      toast.error("No se pudo enviar el correo. El destinatario es inválido.", {
+        position: "bottom-right",
+      });
       return;
     }
 
@@ -86,18 +96,25 @@ function BookingCalendar({ userId, userEmail: propUserEmail }) {
 
       const result = await response.json();
       if (response.ok) {
-        toast.success("Correo enviado correctamente.");
+        toast.success("Correo enviado correctamente.", {
+          position: "bottom-right",
+        });
       } else {
         console.error("Error al enviar el correo:", result.error);
-        toast.error(`Error enviando correo: ${result.error}`);
+        toast.error(`Error enviando correo: ${result.error}`, {
+          position: "bottom-right",
+        });
       }
     } catch (fetchError) {
       console.error("Error inesperado al enviar el correo:", fetchError);
-      toast.error("Ocurrió un error inesperado al enviar el correo.");
+      toast.error("Ocurrió un error inesperado al enviar el correo.", {
+        position: "bottom-right",
+      });
     }
   };
 
   const fetchAvailableSlots = async () => {
+    console.log("bob")
     try {
       const { data, error } = await supabase
         .from("availability")
@@ -107,16 +124,22 @@ function BookingCalendar({ userId, userEmail: propUserEmail }) {
 
       if (error && error.code !== "PGRST116") {
         console.error("Error al obtener horarios disponibles:", error);
-        toast.error("Error al cargar los horarios disponibles.");
+        toast.error("Error al cargar los horarios disponibles.", {
+          position: "bottom-right",
+        });
       } else {
         setAvailableSlots(data?.time_slots || []);
         if (data?.time_slots?.length === 0) {
-          toast.info("No hay horarios disponibles para esta fecha.");
+          toast.info("No hay horarios disponibles para esta fecha.", {
+            position: "bottom-right",
+          });
         }
       }
     } catch (err) {
       console.error("Error inesperado al cargar horarios disponibles:", err);
-      toast.error("Ocurrió un error inesperado.");
+      toast.error("Ocurrió un error inesperado.", {
+        position: "bottom-right",
+      });
     }
   };
 
@@ -131,17 +154,23 @@ function BookingCalendar({ userId, userEmail: propUserEmail }) {
         setReservations(data);
       } else {
         console.error("Error al obtener reservas:", error);
-        toast.error("Error al cargar tus reservas.");
+        toast.error("Error al cargar tus reservas.", {
+          position: "bottom-right",
+        });
       }
     } catch (err) {
       console.error("Error inesperado al cargar reservas:", err);
-      toast.error("Ocurrió un error inesperado.");
+      toast.error("Ocurrió un error inesperado.", {
+        position: "bottom-right",
+      });
     }
   };
 
   const handleReserve = async () => {
     if (!selectedSlot) {
-      toast.error("Debes seleccionar una hora antes de reservar.");
+      toast.error("Debes seleccionar una hora antes de reservar.", {
+        position: "bottom-right",
+      });
       return;
     }
 
@@ -156,7 +185,9 @@ function BookingCalendar({ userId, userEmail: propUserEmail }) {
         availabilityError ||
         !availability?.time_slots.includes(selectedSlot)
       ) {
-        toast.error("El horario seleccionado no está disponible.");
+        toast.error("El horario seleccionado no está disponible.", {
+          position: "bottom-right",
+        });
         return;
       }
 
@@ -178,7 +209,9 @@ function BookingCalendar({ userId, userEmail: propUserEmail }) {
           .update({ time_slots: updatedSlots })
           .eq("date", date.toISOString().split("T")[0]);
 
-        toast.success("Reserva realizada con éxito.");
+        toast.success("Reserva realizada con éxito.", {
+          position: "bottom-right",
+        });
         setSelectedSlot(null);
         fetchAvailableSlots();
         fetchReservations();
@@ -193,11 +226,15 @@ function BookingCalendar({ userId, userEmail: propUserEmail }) {
         `;
         await sendEmail(userEmail, subject, html);
       } else {
-        toast.error("Error al realizar la reserva.");
+        toast.error("Error al realizar la reserva.", {
+          position: "bottom-right",
+        });
       }
     } catch (err) {
       console.error("Error inesperado al realizar la reserva:", err);
-      toast.error("Ocurrió un error inesperado.");
+      toast.error("Ocurrió un error inesperado.", {
+        position: "bottom-right",
+      });
     }
   };
 
@@ -223,7 +260,9 @@ function BookingCalendar({ userId, userEmail: propUserEmail }) {
             .update({ time_slots: updatedSlots })
             .eq("date", reservationDate);
 
-          toast.success("Reserva cancelada.");
+          toast.success("Reserva cancelada.", {
+            position: "bottom-right",
+          });
           fetchAvailableSlots();
           fetchReservations();
 
@@ -238,11 +277,15 @@ function BookingCalendar({ userId, userEmail: propUserEmail }) {
           await sendEmail(userEmail, subject, html);
         }
       } else {
-        toast.error("Error al cancelar la reserva.");
+        toast.error("Error al cancelar la reserva.", {
+          position: "bottom-right",
+        });
       }
     } catch (err) {
       console.error("Error inesperado al cancelar la reserva:", err);
-      toast.error("Ocurrió un error inesperado.");
+      toast.error("Ocurrió un error inesperado.", {
+        position: "bottom-right",
+      });
     }
   };
 
