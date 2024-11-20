@@ -40,7 +40,7 @@ export default function Reviews() {
               <Review_Score score={review.score} />
             </div>
 
-            <p className="description">“{review.testimony}”</p>
+            <p className="testimony">“{review.testimony}”</p>
 
             <div className="author">
               <span>~</span>
