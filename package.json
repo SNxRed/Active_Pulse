@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@files-ui/react": "^1.2.4",
     "@supabase/supabase-js": "^2.45.6",
     "express": "^4.21.1",
     "prop-types": "^15.8.1",
