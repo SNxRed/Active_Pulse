@@ -1,7 +1,6 @@
 import "./styles/user_list.css";
 import { useState, useEffect, useRef } from "react";
 import { supabase } from "./supabaseClient"; // Asegúrate de importar tu cliente de Supabase
-import Upload_Square_Form from "./components/upload_square_form";
 import Drop_File_Zone from "./components/drop_file_zone";
 export default function UserList() {
   const [user_list, set_user_list] = useState([]);
