@@ -192,7 +192,7 @@ export default function UserList() {
                     }}
                   >
                     <img
-                      src="../src/assets/view_document_icon_1.png"
+                      src="https://ymjjininyltkzfajvwvd.supabase.co/storage/v1/object/public/uploads/public/Images/view_document_icon_1.png"
                       alt="view_document_icon"
                       title="Ver documentos"
                     />
@@ -204,7 +204,7 @@ export default function UserList() {
                     }}
                   >
                     <img
-                      src="../src/assets/upload_icon_3.png"
+                      src="https://ymjjininyltkzfajvwvd.supabase.co/storage/v1/object/public/uploads/public/Images/upload_icon_3.png"
                       alt="upload_icon"
                       title="Subir documentos"
                     />
