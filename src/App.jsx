@@ -98,10 +98,9 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/update-password" element={<UpdatePassword />} />
 
-          <Route path="/admin-home" element={<AdminHome />} />
+          
         
           <Route path="/" element={<LogoLayout><Usuario /></LogoLayout>} />
-          <Route path="/upload" element={<AdminUploadForm />} />
           <Route path="/motivation" element={<LogoLayout><MotivationalContent /></LogoLayout>} />
           <Route path="/reviews" element={<LogoLayout><Reviews /></LogoLayout>} />
           <Route path="/create_review" element={<LogoLayout><Create_Review /></LogoLayout>} />
@@ -111,12 +110,12 @@ function App() {
           <Route path="/routines"  element={session ? <LogoLayout><Routines userId={session?.user?.id}/></LogoLayout> : <Navigate to="/" replace />} />
           <Route path="/admin" element={session && isAdmin ? <LogoLayout><Admin /></LogoLayout> : <Navigate to="/" replace />} />
           <Route path="/userprofile" element={session ? <LogoLayout><Perfil userId={session?.user?.id}/></LogoLayout> : <Navigate to="/" replace />} />
-          <Route path="/admin/upload" element={session && isAdmin ? <LogoLayout><AdminUploadForm /></LogoLayout> : <Navigate to="/" replace />} />
+          <Route path="/upload" element={session && isAdmin ? <LogoLayout><AdminUploadForm adminId={session?.user?.id}/></LogoLayout> : <Navigate to="/" replace />} />
           <Route path="/booking" element={session ? <LogoLayout><BookingCalendar userId={session?.user?.id} /></LogoLayout> : <Navigate to="/" replace />} />
           <Route path="/admin-panel" element={session && isAdmin ? <LogoLayout><AdminPanel adminId={session?.user?.id} /></LogoLayout> : <Navigate to="/" replace />} />
           {/* <Route path="/admin-profile" element={session && isAdmin ? <LogoLayout><Account adminId={session?.user?.id} /></LogoLayout> : <Navigate to="/" replace />} /> */}
           <Route path="/user_list" element={session && isAdmin ? <LogoLayout><User_list adminId={session?.user?.id} /></LogoLayout> : <Navigate to="/" replace />} />
-
+          <Route path="/admin-home" element={session && isAdmin ? <AdminHome adminId={session?.user?.id}/> :<Navigate to="/" replace/> }/>
 
           {/* Ruta de Logout */}
           <Route path="/logout" element={<Logout />} />
