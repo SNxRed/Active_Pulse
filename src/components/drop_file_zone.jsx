@@ -16,7 +16,7 @@ export default function Drop_File_Zone({ onFileSelect }) {
   };
 
   return (
-    <div>
+    <>
       <Dropzone
         onChange={updateFiles}
         value={files}
@@ -33,7 +33,7 @@ export default function Drop_File_Zone({ onFileSelect }) {
           />
         ))}
       </Dropzone>
-      <button onClick={handleUpload}>Subir Archivos</button> {/* Botón para iniciar la subida */}
-    </div>
+      <button onClick={handleUpload} className="modal-file-button"><span>Enviar</span></button> 
+    </>
   );
 }

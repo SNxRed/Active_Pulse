@@ -1,0 +1,48 @@
+/* UserFileDownload.css */
+.routine-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #2a004e;
+    border-radius: 0.5rem;
+    border: 1px solid #7f00b2;
+    padding: 1rem;
+    outline: none;
+    font-style: italic;
+    color: #943eb6;
+    max-width: 40%;
+    margin: 8rem auto;
+
+    gap: 1rem;
+    
+  }
+  .routine-container > h2 {
+    margin: 0;
+  }
+  .file-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-top: 15px;
+  }
+
+  
+  .file-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .download-link {
+    display: flex;
+    margin-top: 10px;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+  
+  .download-link:hover {
+    background-color: #0056b3;
+  }
