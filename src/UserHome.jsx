@@ -15,12 +15,30 @@ export default function Usuario() {
 
       {/* Sección de Servicios */}
       <div className="services-section">
-        <div className="service-card">
-          <img
-            src="https://ymjjininyltkzfajvwvd.supabase.co/storage/v1/object/public/uploads/public/Images/service-routines.png"
-            alt="Servicio 1"
-            className="service-image"
-          />
+        {/* Contenedor de imágenes */}
+        <div className="image-container">
+          <div className="service-image">
+            <img
+              alt="Servicio 1"
+              src="https://ymjjininyltkzfajvwvd.supabase.co/storage/v1/object/public/uploads/public/Images/service-routines.png"
+            />
+          </div>
+          <div className="service-image">
+            <img
+              src="https://ymjjininyltkzfajvwvd.supabase.co/storage/v1/object/public/uploads/public/Images/service-family.png"
+              alt="Fútbol como conexión familiar"
+            />
+          </div>
+          <div className="service-image">
+            <img
+              src="https://ymjjininyltkzfajvwvd.supabase.co/storage/v1/object/public/uploads/public/Images/service-testimonials.png"
+              alt="Testimonios"
+            />
+          </div>
+        </div>
+
+        {/* Contenedor de textos */}
+        <div className="text-container">
           <div className="service-text">
             <h2>Rutinas personalizadas</h2>
             <h4>Te proporcionamos un programa personalizado que se adapte a tus objetivos y nivel de habilidad.</h4>
@@ -30,13 +48,6 @@ export default function Usuario() {
               juego.
             </h4>
           </div>
-        </div>
-        <div className="service-card">
-          <img
-            src="https://ymjjininyltkzfajvwvd.supabase.co/storage/v1/object/public/uploads/public/Images/service-family.png"
-            alt="Fútbol como conexión familiar"
-            className="service-image"
-          />
           <div className="service-text">
             <h2>Programa familiar</h2>
             <h4>
@@ -49,13 +60,6 @@ export default function Usuario() {
               crecer y disfrutar juntos.
             </h4>
           </div>
-        </div>
-        <div className="service-card">
-          <img
-            src="https://ymjjininyltkzfajvwvd.supabase.co/storage/v1/object/public/uploads/public/Images/service-testimonials.png"
-            alt="Testimonios"
-            className="service-image"
-          />
           <div className="service-text">
             <h2>Testimonios</h2>
             <h4>
@@ -85,7 +89,7 @@ export default function Usuario() {
         </div>
         <img
           src="https://ymjjininyltkzfajvwvd.supabase.co/storage/v1/object/public/uploads/public/Images/contact-photo.png"
-          alt="Contacto"
+ alt="Contacto"
           className="contact-image"
         />
       </div>

@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import { supabase } from "./supabaseClient";
 import Auth from "./Auth";
-import Account from "./Account";
+// import Account from "./Account";
 import Register from "./Register";
 import Admin from "./Admin";
 import ForgotPassword from "./ForgotPassword";
@@ -26,6 +26,9 @@ import "react-toastify/dist/ReactToastify.css";
 import BookingCalendar from "./BookingCalendar";
 import AdminPanel from "./AdminPanel";
 import AdminHome from "./AdminHome";
+import User_list from "./user_list";
+import Routines from "./Routines";
+
 
 function App() {
   const [session, setSession] = useState(null);
@@ -48,9 +51,9 @@ function App() {
         if (session) {
           // Obtener información del perfil para verificar si es admin
           const { data, error } = await supabase
-            .from("profiles")
+            .from("user_profiles")
             .select("isadmin")
-            .eq("id", session.user.id)
+            .eq("user_id", session.user.id)
             .single();
 
           if (error) {
@@ -90,113 +93,37 @@ function App() {
       <div className="container">
         <Routes>
           {/* Rutas públicas */}
-          <Route
-            path="/login"
-            element={session ? <Navigate to="/" replace /> : <Auth />}
-          />
+          <Route path="/login" element={session ? <Navigate to="/" replace /> : <Auth />} />
           <Route path="/register" element={<Register />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/update-password" element={<UpdatePassword />} />
+
           <Route path="/admin-home" element={<AdminHome />} />
-          <Route
-            path="/user"
-            element={
-              <LogoLayout>
-                <Usuario />
-              </LogoLayout>
-            }
-          />
+        
+          <Route path="/" element={<LogoLayout><Usuario /></LogoLayout>} />
           <Route path="/upload" element={<AdminUploadForm />} />
-          <Route path="/motivation" element={<MotivationalContent />} />
-          <Route
-            path="/reviews"
-            element={
-              <LogoLayout>
-                <Reviews />
-              </LogoLayout>
-            }
-          />
-          <Route
-            path="/create_review"
-            element={
-              <LogoLayout>
-                <Create_Review />
-              </LogoLayout>
-            }
-          />
+          <Route path="/motivation" element={<LogoLayout><MotivationalContent /></LogoLayout>} />
+          <Route path="/reviews" element={<LogoLayout><Reviews /></LogoLayout>} />
+          <Route path="/create_review" element={<LogoLayout><Create_Review /></LogoLayout>} />
 
           {/* Rutas protegidas */}
-          <Route
-            path="/"
-            element={
-              session ? (
-                <LogoLayout>
-                  <Account key={session.user.id} session={session} />
-                </LogoLayout>
-              ) : (
-                <Navigate to="/login" replace />
-              )
-            }
-          />
-          <Route
-            path="/admin"
-            element={
-              session /*&& isAdmin*/ ? (
-                <LogoLayout>
-                  <Admin />
-                </LogoLayout>
-              ) : (
-                <Navigate to="/user" replace />
-              )
-            }
-          />
-          <Route
-            path="/userprofile"
-            element={
-              session && !isAdmin ? (
-                <LogoLayout>
-                  <Perfil />
-                </LogoLayout>
-              ) : (
-                <Navigate to="/user" replace />
-              )
-            }
-          />
-          <Route
-            path="/admin/upload"
-            element={
-              session ? (
-                <LogoLayout>
-                  <AdminUploadForm />
-                </LogoLayout>
-              ) : (
-                <Navigate to="/login" replace />
-              )
-            }
-          />
-          <Route
-            path="/booking"
-            element={
-              session ? (
-                <LogoLayout>
-                  <BookingCalendar userId={session?.user?.id} />
-                </LogoLayout>
-              ) : (
-                <Navigate to="/login" replace />
-              )
-            }
-          />
-          <Route path="/admin-panel" element={session /*&& isAdmin*/ ? (<LogoLayout> <AdminPanel adminId={session?.user?.id} /> </LogoLayout> ) : ( <Navigate to="/login" replace />)
-            }
-          />
-          
+
+          <Route path="/routines"  element={session ? <LogoLayout><Routines userId={session?.user?.id}/></LogoLayout> : <Navigate to="/" replace />} />
+          <Route path="/admin" element={session && isAdmin ? <LogoLayout><Admin /></LogoLayout> : <Navigate to="/" replace />} />
+          <Route path="/userprofile" element={session ? <LogoLayout><Perfil userId={session?.user?.id}/></LogoLayout> : <Navigate to="/" replace />} />
+          <Route path="/admin/upload" element={session && isAdmin ? <LogoLayout><AdminUploadForm /></LogoLayout> : <Navigate to="/" replace />} />
+          <Route path="/booking" element={session ? <LogoLayout><BookingCalendar userId={session?.user?.id} /></LogoLayout> : <Navigate to="/" replace />} />
+          <Route path="/admin-panel" element={session && isAdmin ? <LogoLayout><AdminPanel adminId={session?.user?.id} /></LogoLayout> : <Navigate to="/" replace />} />
+          {/* <Route path="/admin-profile" element={session && isAdmin ? <LogoLayout><Account adminId={session?.user?.id} /></LogoLayout> : <Navigate to="/" replace />} /> */}
+          <Route path="/user_list" element={session && isAdmin ? <LogoLayout><User_list adminId={session?.user?.id} /></LogoLayout> : <Navigate to="/" replace />} />
+
+
           {/* Ruta de Logout */}
           <Route path="/logout" element={<Logout />} />
           {/* Ruta por defecto */}
-          <Route path="*" element={ session ? ( isAdmin ? (<Navigate to="/admin" replace /> ) : ( <Navigate to="/user" replace /> ) ) : ( <Navigate to="/login" replace />)
-              
-            }
-          />
+
+          <Route path="*" element={session ? (isAdmin ? <Navigate to="/admin" replace /> : <Navigate to="/user-profile" replace />) : <Navigate to="/" replace />} />
+
         </Routes>
       </div>
     </Router>
