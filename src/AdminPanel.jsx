@@ -20,7 +20,7 @@ function AdminPanel({ adminId }) {
     try {
       const { data: reservations, error } = await supabase
         .from("reservations_with_users")
-        .select("*");
+        .select("user_email, date, time, status");
   
       if (error) {
         console.error("Error al obtener reservas:", error);
@@ -244,7 +244,7 @@ function AdminPanel({ adminId }) {
           <tbody>
               {reservations.map((res) => (
                    <tr key={res.id}>
-                  <td>{res.user_email}</td>
+                  <td>{res.email}</td>
                   <td>{res.date}</td>
                   <td>{res.time}</td>
                   <td>{res.status}</td>

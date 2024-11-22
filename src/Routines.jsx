@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from './supabaseClient';
-
+import "./styles/routine.css";
 const UserFileDownload = ({ userId }) => {
   const [userFile, setUserFile] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -12,6 +12,8 @@ const UserFileDownload = ({ userId }) => {
         .from('user_files') // Cambia esto si tu tabla tiene otro nombre
         .select('file_name, file_path')
         .eq('user_id', userId) // Filtra por el ID del usuario
+        .order('created_at', { ascending: false })
+        .limit(1)
         // .single(); // Obtiene solo un archivo
       console.log(data)
       if (error) {
@@ -55,12 +57,12 @@ const UserFileDownload = ({ userId }) => {
       <h2>Tu Rutina Personalizada</h2>
       {userFile ? (
         <div className="file-info">
-          <p className="file-name">Nombre del archivo: {userFile.file_name}</p>
+          <a className="file-name">{userFile.file_name}</a>
           <button 
             onClick={() => downloadFile(userFile.file_name)} // Llama a la función de descarga
-            className="download-button"
+            className="modal-file-button"
           >
-            Descargar Archivo
+            <span>Descargar</span>
           </button>
         </div>
       ) : (

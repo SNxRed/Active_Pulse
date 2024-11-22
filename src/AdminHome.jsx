@@ -41,9 +41,8 @@ export default function AdminHub() {
   const fetchRecentActivity = async () => {
     try {
       const { data, error } = await supabase
-        .from("reservations")
-        .select("user_id, date, time, status")
-        .order("created_at", { ascending: false })
+        .from("reservations_with_users")
+        .select("user_email, date, time, status")
         .limit(5);
 
       if (error) {
@@ -97,7 +96,7 @@ export default function AdminHub() {
           <tbody>
             {recentActivity.map((activity, index) => (
               <tr key={index}>
-                <td>{activity.user_id}</td>
+                <td>{activity.user_email}</td>
                 <td>{activity.date}</td>
                 <td>{activity.time}</td>
                 <td>{activity.status}</td>

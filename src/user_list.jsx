@@ -158,6 +158,11 @@ export default function UserList() {
   return (
     <div id="user-list-container">
       <div id="user-searcher-container">
+      <svg viewBox="0 0 24 24" aria-hidden="true" id="search-icon">
+          <g>
+            <path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path>
+          </g>
+        </svg>
         <input
           id="user-searcher-input"
           type="search"
@@ -179,21 +184,25 @@ export default function UserList() {
                   <span>{`${user.first_name} ${user.last_name}`}</span>
                 </div>
                 <div className="user-info-container-buttons">
-                  <button onClick={() => {
-                    setSelectedUserId(user.user_id); // Almacenar el ID del usuario seleccionado
-                    getUserFiles(user.user_id); // Obtener archivos del usuario al seleccionar
-                    viewFilesModal.current.showModal(); // Mostrar modal para ver archivos
-                  }}>
+                  <button
+                    onClick={() => {
+                      setSelectedUserId(user.user_id); // Almacenar el ID del usuario seleccionado
+                      getUserFiles(user.user_id); // Obtener archivos del usuario al seleccionar
+                      viewFilesModal.current.showModal(); // Mostrar modal para ver archivos
+                    }}
+                  >
                     <img
                       src="../src/assets/view_document_icon_1.png"
                       alt="view_document_icon"
                       title="Ver documentos"
                     />
                   </button>
-                  <button onClick={() => {
-                    setSelectedUserId(user.user_id);
-                    uploadModal.current.showModal(); // Mostrar modal para subir archivos
-                  }}>
+                  <button
+                    onClick={() => {
+                      setSelectedUserId(user.user_id);
+                      uploadModal.current.showModal(); // Mostrar modal para subir archivos
+                    }}
+                  >
                     <img
                       src="../src/assets/upload_icon_3.png"
                       alt="upload_icon"
@@ -208,33 +217,62 @@ export default function UserList() {
           <h2 style={{ textAlign: "center" }}>No hay usuarios disponibles.</h2>
         )}
       </ul>
-      <dialog ref={uploadModal} className="user_list_modal">
-        <div id="upload-modal-container">
-          <h2 id="modal-header">SUBIR RUTINA</h2>
+      <dialog ref={uploadModal} className="user-list-modal">
+        <div className="users-modal-container">
+          <h2 className="modal-header">SUBIR RUTINA</h2>
           <Drop_File_Zone onFileSelect={uploadFiles} /> {/* Pasar la función de subida */}
-          <button className="modal-file-button" onClick={() => uploadModal.current.close()}>
-            <span>Cerrar</span>
-          </button>
+          <span className="close-modal-button" onClick={() => uploadModal.current.close()} title="Cerrar">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="41px"
+              viewBox="0 0 24 24"
+              fill="#943eb6"
+              className=""
+            >
+              <path d="M0 0h24v24H0V0z" fill="none" opacity=".87"></path>
+              <path
+                d="M12 4c-4.41 0-8 3.59-8 8s3.59 8 8 8 8-3.59 8-8-3.59-8-8-8zm5 11.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"
+                fill="none"
+                opacity=".5"
+              ></path>
+              <path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.59-13L12 10.59 8.41 7 7 8.41 10.59 12 7 15.59 8.41 17 12 13.41 15.59 17 17 15.59 13.41 12 17 8.41z"></path>
+            </svg>
+          </span>
         </div>
       </dialog>
-      <dialog ref={viewFilesModal} className="user_list_modal">
-        <div id="view-files-modal-container">
-          <h2 id="modal-header">ARCHIVOS DEL USUARIO</h2>
-          <h3>Archivos del Usuario:</h3>
-          <ul>
+      <dialog ref={viewFilesModal} className="user-list-modal">
+        <div className="users-modal-container">
+          <h2 className="modal-header">ARCHIVOS DEL USUARIO</h2>
+          <ul className="user-files-list">
             {userFiles.length ? (
               userFiles.map((file, index) => (
                 <li key={index}>
-                  <a href={file.file_path} target="_blank" rel="noopener noreferrer">{file.file_name}</a>
+                  <a href={file.file_path} target="_blank" rel="noopener noreferrer">
+                    {file.file_name}
+                  </a>
                 </li>
               ))
             ) : (
-              <p>No hay archivos asociados a este usuario.</p>
+              <a>No hay archivos asociados a este usuario.</a>
             )}
           </ul>
-          <button className="modal-file-button" onClick={() => viewFilesModal.current.close()}>
-            <span>Cerrar</span>
-          </button>
+          <span className="close-modal-button" onClick={() => viewFilesModal.current.close()} title="Cerrar">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="41px"
+              viewBox="0 0 24 24"
+              fill="#943eb6"
+              className=""
+            >
+              <path d="M0 0h24v24H0V0z" fill="none" opacity=".87"></path>
+              <path
+                d="M12 4c-4.41 0-8 3.59-8 8s3.59 8 8 8 8-3.59 8-8-3.59-8-8-8zm5 11.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"
+                fill="none"
+                opacity=".5"
+              ></path>
+              <path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.59-13L12 10.59 8.41 7 7 8.41 10.59 12 7 15.59 8.41 17 12 13.41 15.59 17 17 15.59 13.41 12 17 8.41z"></path>
+            </svg>
+          </span>
         </div>
       </dialog>
     </div>

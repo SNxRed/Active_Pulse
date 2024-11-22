@@ -65,6 +65,7 @@ function Navbar() {
         src="https://ymjjininyltkzfajvwvd.supabase.co/storage/v1/object/public/uploads/public/Images/logo-main.png"
         alt="Active Pulse Logo"
         className="navbar-logo"
+        onClick={() => navigate("/")}
       />
       <div className="navbar-buttons">
         {user ? (
@@ -75,12 +76,24 @@ function Navbar() {
                 onClick={() => navigate("/admin-home")} className="navbar-button">
                 Inicio
               </button>
+              <button
+                onClick={() => navigate("/user_list")} className="navbar-button">
+                Lista de usuarios
+              </button>
+              <button
+                onClick={() => navigate("/reviews")} className="navbar-button">
+                Ver testimonios
+              </button>
               <button onClick={handleSignOut} className="navbar-button">
                 Cerrar sesión
               </button>
             </>
           ) : ( // Si no es admin, mostrar botones de usuario
             <>
+            <button
+                onClick={() => navigate("/")} className="navbar-button">
+                Inicio
+              </button>
               <button onClick={goToUserProfile} className="navbar-button">
                 Mi perfil
               </button>
@@ -88,10 +101,7 @@ function Navbar() {
                 onClick={() => navigate("/routines")} className="navbar-button">
                 Ver rutina
               </button>
-              <button
-                onClick={() => navigate("/")} className="navbar-button">
-                Inicio
-              </button>
+              
               <button
                 onClick={() => navigate("/create_review")} className="navbar-button">
                 Crear testimonio
