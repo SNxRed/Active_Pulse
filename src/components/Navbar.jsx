@@ -90,6 +90,7 @@ function Navbar() {
               Crear testimonio
             </button>
             <button onClick={handleSignOut} className="navbar-button">
+              
               Cerrar sesión
             </button>
           </>
@@ -114,6 +115,18 @@ function Navbar() {
               Panel Admin
             </button>
             <button
+            onClick={() => navigate("/upload")}
+            className="navbar-button"
+            >
+              Subir contenido
+            </button>
+            <button
+            onClick={() => navigate("/motivation")}
+            className="navbar-button"
+            >
+              Ver contenido
+            </button>
+            <button
               onClick={() => navigate("/booking")}
               className="navbar-button"
             >
@@ -130,7 +143,7 @@ function Navbar() {
               className="navbar-button"
             >
               Crear testimonio
-            </button>
+            </button>           
           </>
         )}
       </div>

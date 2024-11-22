@@ -25,6 +25,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import BookingCalendar from "./BookingCalendar";
 import AdminPanel from "./AdminPanel";
+import AdminHome from "./AdminHome";
 
 function App() {
   const [session, setSession] = useState(null);
@@ -96,6 +97,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/update-password" element={<UpdatePassword />} />
+          <Route path="/admin-home" element={<AdminHome />} />
           <Route
             path="/user"
             element={
@@ -184,35 +186,15 @@ function App() {
               )
             }
           />
-          <Route
-            path="/admin-panel"
-            element={
-              session /*&& isAdmin*/ ? (
-                <LogoLayout>
-                  <AdminPanel adminId={session?.user?.id} />
-                </LogoLayout>
-              ) : (
-                <Navigate to="/login" replace />
-              )
+          <Route path="/admin-panel" element={session /*&& isAdmin*/ ? (<LogoLayout> <AdminPanel adminId={session?.user?.id} /> </LogoLayout> ) : ( <Navigate to="/login" replace />)
             }
           />
-
+          
           {/* Ruta de Logout */}
           <Route path="/logout" element={<Logout />} />
-
           {/* Ruta por defecto */}
-          <Route
-            path="*"
-            element={
-              session ? (
-                isAdmin ? (
-                  <Navigate to="/admin" replace />
-                ) : (
-                  <Navigate to="/user" replace />
-                )
-              ) : (
-                <Navigate to="/login" replace />
-              )
+          <Route path="*" element={ session ? ( isAdmin ? (<Navigate to="/admin" replace /> ) : ( <Navigate to="/user" replace /> ) ) : ( <Navigate to="/login" replace />)
+              
             }
           />
         </Routes>

@@ -44,28 +44,6 @@ export default function MotivationalContent() {
 
   return (
     <>
-      {/* Header */}
-      <header
-        style={{
-          width: '100%',
-          background: 'linear-gradient(to bottom, #7f00b2, #510085)',
-          padding: '1rem 2rem',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'flex-start',
-          boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
-        }}
-      >
-        <img
-          src="https://ymjjininyltkzfajvwvd.supabase.co/storage/v1/object/public/uploads/public/Images/logo-main.png"
-          alt="Logo Active Pulse"
-          style={{
-            height: '100px',
-            marginRight: '1rem',
-          }}
-        />
-      </header>
-
       <div className="motivational-content-container">
         <h1 className="motivational-title">Contenido Motivacional</h1>
 
@@ -142,19 +120,9 @@ export default function MotivationalContent() {
         ) : (
           <p className="no-content-message">No hay frases motivacionales disponibles.</p>
         )}
+        
       </div>
-      <div className="background-images">
-        <img
-          src="https://ymjjininyltkzfajvwvd.supabase.co/storage/v1/object/public/uploads/public/Images/corner-logo.png"
-          alt="Esquina izquierda"
-          className="corner-image left"
-        />
-        <img
-          src="https://ymjjininyltkzfajvwvd.supabase.co/storage/v1/object/public/uploads/public/Images/corner-logo.png"
-          alt="Esquina derecha"
-          className="corner-image right"
-        />
-      </div>
+      
     </>
   );
 }
