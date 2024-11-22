@@ -1,28 +1,39 @@
-import { Dropzone,FileMosaic } from "@files-ui/react";
+import { Dropzone, FileMosaic } from "@files-ui/react";
 import * as React from "react";
 
-export default function Drop_File_Zone() {
+export default function Drop_File_Zone({ onFileSelect }) {
   const [files, setFiles] = React.useState([]);
-  const update_states = ["preparing", "uploading", "aborted", "error", "success"];
-  const updateFiles = (incommingFiles) => {
-    //do something with the files
-    setFiles(incommingFiles);
-    //even your own upload implementation
+
+  const updateFiles = (incomingFiles) => {
+    setFiles(incomingFiles);
   };
-  const removeFile = (id) => {
-    setFiles(files.filter((x) => x.id !== id));
+
+  const handleUpload = async () => {
+    for (const file of files) {
+      await onFileSelect(file); // Llama a la función de subida en UserList
+    }
+    setFiles([]); // Limpia la lista de archivos después de la subida
   };
+
   return (
-    <Dropzone
-      onChange={updateFiles}
-      value={files}
-      accept="application/pdf, application/application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-      footerConfig={{ customMessage: "Formatos permitidos : PDF, Excel, XLSX" }}
-      style={{ height: "250px" }}
-    >
-      {files.map((file) => (
-          <FileMosaic key={file.id} {...file} onDelete={removeFile} uploadStatus="success" />
+    <div>
+      <Dropzone
+        onChange={updateFiles}
+        value={files}
+        accept="application/pdf, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        footerConfig={{ customMessage: "Formatos permitidos: PDF, Excel, XLSX" }}
+        style={{ height: "250px" }}
+        label="Arrastra y suelta tus archivos aquí, o haz clic para seleccionarlo"
+      >
+        {files.map((file) => (
+          <FileMosaic 
+            key={file.id} 
+            {...file} 
+            uploadStatus="success" 
+          />
         ))}
-    </Dropzone>
+      </Dropzone>
+      <button onClick={handleUpload}>Subir Archivos</button> {/* Botón para iniciar la subida */}
+    </div>
   );
 }
