@@ -3,6 +3,7 @@ import { supabase } from "./supabaseClient";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./styles/AdminUploadForm.css";
+import { useNavigate } from "react-router-dom";
 
 export default function AdminUploadForm() {
     const [file, setFile] = useState(null);
@@ -66,6 +67,8 @@ export default function AdminUploadForm() {
         setSelectedOption(null);
     };
 
+    const navigate = useNavigate();
+
     const openModal = (option) => {
         setSelectedOption(option);
     };
@@ -103,13 +106,13 @@ export default function AdminUploadForm() {
                         />
                         <span>Videos Motivacionales</span>
                     </button>
-                    <button className="admin-option" onClick={() => openModal("Otros")}>
+                    <button className="admin-option" onClick={() => navigate("/user_list")}>
                         <img
                             src="https://ymjjininyltkzfajvwvd.supabase.co/storage/v1/object/public/uploads/public/Images/icon-other-content.png"
                             alt="Otros"
                             className="option-icon"
                         />
-                        <span>Otros</span>
+                        <span>Subir Rutina</span>
                     </button>
                 </div>
             </div>
