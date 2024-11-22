@@ -25,38 +25,101 @@ export default function UserList() {
   }
 
   // Función para subir archivos
-  async function uploadFiles(file) {
-    if (!selectedUserId || !file) return; // Asegúrate de que haya un usuario seleccionado y un archivo
+  async function uploadFiles(fileObject) {
+    // Asegúrate de extraer el archivo real
+    const file = fileObject.file; // Accede al archivo desde la propiedad 'file'
 
-    // Subir archivo al bucket
-    const { data, error } = await supabase.storage
-      .from('uploads') // Nombre del bucket
-      .upload(`public/Rutinas/${file.name}`, file); // Ruta donde se guardará el archivo
-      console.log("File size before upload:", file.size);
-    if (error) {
-      console.error("Error uploading file:", error);
-      return;
+    if (!file) {
+        console.error("Archivo no proporcionado.");
+        return;
     }
 
-    // Aquí puedes construir la URL del archivo subido
-    const filePath = `${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/uploads/public/Rutinas/${file.name}`;
-
-    // Guardar información del archivo en la tabla user_files
-    const { error: insertError } = await supabase
-      .from('user_files')
-      .insert([
-        { user_id: selectedUserId, file_name: file.name, file_path: filePath }
-      ]);
-
-    if (insertError) {
-      console.error("Error inserting file record:", insertError);
-    } else {
-      console.log("File uploaded and record created successfully.");
-      uploadModal.current.close(); // Cerrar el modal de subida después de subir el archivo
-      getUserFiles(selectedUserId); // Obtener archivos del usuario nuevamente
+    if (!(file instanceof File)) {
+        console.error("El objeto proporcionado no es un archivo válido:", file);
+        return;
     }
-  }
 
+    if (!selectedUserId) {
+        console.error("Usuario no seleccionado.");
+        return;
+    }
+
+    // Verificar tipo MIME permitido
+    const validMimeTypes = [
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // Excel
+        'application/pdf' // PDF
+    ];
+
+    if (!validMimeTypes.includes(file.type)) {
+        console.error("Tipo de archivo no permitido. Solo se aceptan archivos Excel o PDF.");
+        return;
+    }
+
+    // Verificar tamaño del archivo
+    if (file.size === 0) {
+        console.error("El archivo está vacío.");
+        return;
+    }
+
+    console.log("Nombre del archivo:", file.name);
+    console.log("Tipo MIME detectado:", file.type);
+    console.log("Tamaño del archivo:", file.size, "bytes");
+
+    // Usar FileReader para leer el archivo como ArrayBuffer
+    const reader = new FileReader();
+
+    reader.onload = async (event) => {
+        try {
+            // Convertir el contenido leído a Blob
+            const blob = new Blob([event.target.result], { type: file.type });
+
+            console.log("Blob generado, tamaño:", blob.size);
+
+            // Subir archivo al bucket de Supabase
+            const { data, error } = await supabase.storage
+                .from('uploads') // Nombre del bucket
+                .upload(`Rutinas/${file.name}`, blob, {
+                    contentType: file.type, // Tipo MIME
+                    cacheControl: '3600', // Control de caché
+                });
+
+            if (error) {
+                console.error("Error al subir el archivo:", error);
+                return;
+            }
+
+            console.log("Archivo subido correctamente:", data);
+
+            // Construir la URL del archivo subido
+            const filePath = `${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/uploads/Rutinas/${file.name}`;
+            console.log("URL del archivo:", filePath);
+
+            // Guardar información del archivo en la base de datos
+            const { error: insertError } = await supabase
+                .from('user_files') // Tabla en Supabase
+                .insert([
+                    { user_id: selectedUserId, file_name: file.name, file_path: filePath }
+                ]);
+
+            if (insertError) {
+                console.error("Error al insertar el registro del archivo:", insertError);
+            } else {
+                console.log("Registro del archivo creado exitosamente.");
+                uploadModal.current.close(); // Cerrar modal después de subir
+                getUserFiles(selectedUserId); // Actualizar lista de archivos
+            }
+        } catch (err) {
+            console.error("Error inesperado:", err);
+        }
+    };
+
+    reader.onerror = (error) => {
+        console.error("Error al leer el archivo:", error);
+    };
+
+    // Leer archivo como ArrayBuffer para garantizar integridad
+    reader.readAsArrayBuffer(file);
+}
   async function getUserFiles(userId) {
     const { data, error } = await supabase
       .from('user_files')
