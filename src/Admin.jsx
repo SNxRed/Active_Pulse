@@ -3,6 +3,7 @@ import { supabase } from "./supabaseClient";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+
 export default function AdminInvite() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);

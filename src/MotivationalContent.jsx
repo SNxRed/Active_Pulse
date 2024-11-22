@@ -120,19 +120,9 @@ export default function MotivationalContent() {
         ) : (
           <p className="no-content-message">No hay frases motivacionales disponibles.</p>
         )}
+        
       </div>
-      <div className="background-images">
-        <img
-          src="https://ymjjininyltkzfajvwvd.supabase.co/storage/v1/object/public/uploads/public/Images/corner-logo.png"
-          alt="Esquina izquierda"
-          className="corner-image left"
-        />
-        <img
-          src="https://ymjjininyltkzfajvwvd.supabase.co/storage/v1/object/public/uploads/public/Images/corner-logo.png"
-          alt="Esquina derecha"
-          className="corner-image right"
-        />
-      </div>
+      
     </>
   );
 }

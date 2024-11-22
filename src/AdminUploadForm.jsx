@@ -117,19 +117,6 @@ export default function AdminUploadForm() {
                 </div>
             </div>
 
-            <div className="background-images">
-                <img
-                    src="https://ymjjininyltkzfajvwvd.supabase.co/storage/v1/object/public/uploads/public/Images/corner-logo.png"
-                    alt="Esquina izquierda"
-                    className="corner-image left"
-                />
-                <img
-                    src="https://ymjjininyltkzfajvwvd.supabase.co/storage/v1/object/public/uploads/public/Images/corner-logo.png"
-                    alt="Esquina derecha"
-                    className="corner-image right"
-                />
-            </div>
-
             {selectedOption && (
                 <div className="modal">
                     <div className="modal-content">
@@ -175,8 +162,8 @@ export default function AdminUploadForm() {
                                 </button>
                             </div>
                         </form>
-                    </div>
-                </div>
+                    </div>         
+                </div>         
             )}
         </>
     );

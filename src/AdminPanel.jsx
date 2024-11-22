@@ -3,6 +3,7 @@ import { supabase } from "./supabaseClient";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Calendar from "react-calendar"; // Asegúrate de tener instalada react-calendar
+import "./styles/AdminPanel.css"
 
 function AdminPanel({ adminId }) {
   const [reservations, setReservations] = useState([]); // Todas las reservas
@@ -221,115 +222,77 @@ function AdminPanel({ adminId }) {
     }
   };
   return (
-    <div>
-      <h2>Gestión de Reservas</h2>
-
-      {loading ? (
-        <p>Cargando reservas...</p>
+    <div className ="admin-panel-container">
+      <h1 className="admin-panel-title"> Panel de Administración</h1>
+    
+    {/*Gestión de Reservas */}
+    <div className="reservations-section">
+    <h2 className="section-title">Gestión de Reservas</h2>
+    
+     {loading ? (
+        <p className="loading-text">Cargando reservas...</p>
       ) : reservations.length > 0 ? (
-        <table
-          style={{
-            width: "100%",
-            borderCollapse: "collapse",
-            marginTop: "20px",
-          }}
-        >
+        <table className="reservations-table">
           <thead>
             <tr>
-              <th style={{ border: "1px solid #ddd", padding: "8px" }}>
-                Nombre
-              </th>
-              <th style={{ border: "1px solid #ddd", padding: "8px" }}>
-                Fecha
-              </th>
-              <th style={{ border: "1px solid #ddd", padding: "8px" }}>Hora</th>
-              <th style={{ border: "1px solid #ddd", padding: "8px" }}>
-                Estado
-              </th>
-              <th style={{ border: "1px solid #ddd", padding: "8px" }}>
-                Acciones
-              </th>
+              <th>Nombre</th>
+              <th>Fecha</th>
+              <th>Hora</th>
+              <th>Estado</th>
             </tr>
           </thead>
           <tbody>
-            {reservations.map((res) => (
-              <tr key={res.id}>
-                <td style={{ border: "1px solid #ddd", padding: "8px" }}>
-                  {res.user_id} {/* Reemplazar con el nombre completo */}
-                </td>
-                <td style={{ border: "1px solid #ddd", padding: "8px" }}>
-                  {res.date}
-                </td>
-                <td style={{ border: "1px solid #ddd", padding: "8px" }}>
-                  {res.time}
-                </td>
-                <td style={{ border: "1px solid #ddd", padding: "8px" }}>
-                  {res.status}
-                </td>
-                <td style={{ border: "1px solid #ddd", padding: "8px" }}>
-                  {res.status === "active" && (
-                    <button
-                      onClick={() =>
-                        handleCancelReservation(
-                          res.id,
-                          res.date,
-                          res.time,
-                          res.email
-                        )
-                      }
-                      style={{
-                        backgroundColor: "#f44336",
-                        color: "white",
-                        padding: "5px 10px",
-                        border: "none",
-                        cursor: "pointer",
-                      }}
-                    >
-                      Cancelar
-                    </button>
-                  )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      ) : (
-        <p>No hay reservas disponibles.</p>
+              {reservations.map((res) => (
+                   <tr key={res.id}>
+                  <td>{res.user_email}</td>
+                  <td>{res.date}</td>
+                  <td>{res.time}</td>
+                  <td>{res.status}</td>
+                </tr>
+              ))}
+            </tbody>
+            </table>
+      ): (
+        <p className="no-reservations-message">No hay reservas disponibles.</p>
+
       )}
-
-      <h2>Gestión de Disponibilidad</h2>
-
-      <Calendar onChange={handleDateChange} value={selectedDate} />
-
-      <h3>
-        Horarios disponibles para {selectedDate.toISOString().split("T")[0]}:
-      </h3>
-      <div>
-        {generateAvailableSlots().map((slot) => (
-          <div key={slot}>
-            <label>
-              <input
-                type="checkbox"
-                checked={selectedSlots.includes(slot)}
-                onChange={() => handleSlotChange(slot)}
-              />
-              {slot}
-            </label>
-          </div>
-        ))}
       </div>
 
-      <button
-        onClick={saveAvailability}
-        style={{
-          marginTop: "20px",
-          padding: "10px 20px",
-          backgroundColor: "#4caf50",
-          color: "white",
-        }}
-      >
-        Guardar Disponibilidad
-      </button>
+          {/*Gestion de disponibilidad */}
+
+
+      {/* Gestión de Disponibilidad */}
+      <div className="availability-section">
+
+        <h2 className="section-title_1">Gestión de Disponibilidad</h2>
+        <div className="availability-content">
+          <div className="calendar-container">
+            <Calendar onChange={setSelectedDate} value={selectedDate} />
+            <p className="selected-date">
+              Fecha seleccionada: <strong>{selectedDate.toISOString().split("T")[0]}</strong>
+            </p>
+          </div>
+          <div className="slots-container">
+            <h3>Seleccion tus horas disponibles: </h3>
+            <div className="slots-grid">
+              {generateAvailableSlots().map((slot) => (
+                <button
+                  key={slot}
+                  onClick={() => handleSlotChange(slot)}
+                  className={`slot-button ${
+                    selectedSlots.includes(slot) ? "selected" : ""
+                  }`}
+                >
+                  {slot}
+                </button>
+              ))}
+            </div>
+            <button className="save-button" onClick={saveAvailability}>
+              Guardar Disponibilidad
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

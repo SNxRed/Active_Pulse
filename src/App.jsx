@@ -25,8 +25,10 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import BookingCalendar from "./BookingCalendar";
 import AdminPanel from "./AdminPanel";
+import AdminHome from "./AdminHome";
 import User_list from "./user_list";
 import Routines from "./Routines";
+
 
 function App() {
   const [session, setSession] = useState(null);
@@ -95,6 +97,9 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/update-password" element={<UpdatePassword />} />
+
+          <Route path="/admin-home" element={<AdminHome />} />
+        
           <Route path="/" element={<LogoLayout><Usuario /></LogoLayout>} />
           <Route path="/upload" element={<AdminUploadForm />} />
           <Route path="/motivation" element={<LogoLayout><MotivationalContent /></LogoLayout>} />
@@ -102,6 +107,7 @@ function App() {
           <Route path="/create_review" element={<LogoLayout><Create_Review /></LogoLayout>} />
 
           {/* Rutas protegidas */}
+
           <Route path="/routines"  element={session ? <LogoLayout><Routines userId={session?.user?.id}/></LogoLayout> : <Navigate to="/" replace />} />
           <Route path="/admin" element={session && isAdmin ? <LogoLayout><Admin /></LogoLayout> : <Navigate to="/" replace />} />
           <Route path="/userprofile" element={session ? <LogoLayout><Perfil userId={session?.user?.id}/></LogoLayout> : <Navigate to="/" replace />} />
@@ -111,11 +117,13 @@ function App() {
           {/* <Route path="/admin-profile" element={session && isAdmin ? <LogoLayout><Account adminId={session?.user?.id} /></LogoLayout> : <Navigate to="/" replace />} /> */}
           <Route path="/user_list" element={session && isAdmin ? <LogoLayout><User_list adminId={session?.user?.id} /></LogoLayout> : <Navigate to="/" replace />} />
 
+
           {/* Ruta de Logout */}
           <Route path="/logout" element={<Logout />} />
-
           {/* Ruta por defecto */}
+
           <Route path="*" element={session ? (isAdmin ? <Navigate to="/admin" replace /> : <Navigate to="/user-profile" replace />) : <Navigate to="/" replace />} />
+
         </Routes>
       </div>
     </Router>

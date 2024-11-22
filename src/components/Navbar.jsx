@@ -68,19 +68,12 @@ function Navbar() {
       />
       <div className="navbar-buttons">
         {user ? (
+
           isAdmin ? ( // Si es admin, mostrar botones de admin primero
             <>
               <button
-                onClick={() => navigate("/admin/upload")} className="navbar-button">
-                Subir Contenido
-              </button>
-              <button
-                onClick={() => navigate("/admin-panel")} className="navbar-button">
-                Gestión Reservas
-              </button>
-              <button
-                onClick={() => navigate("/admin")} className="navbar-button">
-                Invitar Usuario
+                onClick={() => navigate("/admin-home")} className="navbar-button">
+                Inicio
               </button>
               <button onClick={handleSignOut} className="navbar-button">
                 Cerrar sesión
@@ -126,14 +119,17 @@ function Navbar() {
               Iniciar sesión
             </button>
             <button
+
               onClick={() => navigate("/")} className="navbar-button">
               Inicio
+
             </button>
             <button
               onClick={() => navigate("/reviews")} className="navbar-button">
               Ver testimonios
             </button>
             <button
+
                 onClick={() => navigate("/motivation")} className="navbar-button">
                 Ver contenido motivacional
               </button>

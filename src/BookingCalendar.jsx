@@ -4,6 +4,7 @@ import { supabase } from "./supabaseClient";
 import { toast } from "react-toastify";
 import "react-calendar/dist/Calendar.css";
 import "react-toastify/dist/ReactToastify.css";
+import "./styles/BookingCalendar.css"
 
 function BookingCalendar({ userId, userEmail: propUserEmail }) {
   const [date, setDate] = useState(new Date());
@@ -290,57 +291,73 @@ function BookingCalendar({ userId, userEmail: propUserEmail }) {
   };
 
   return (
-    <div>
-      <h2>Selecciona una fecha</h2>
-      <Calendar onChange={setDate} value={date} />
-
-      <h3>Horarios disponibles:</h3>
-      {availableSlots.length > 0 ? (
-        availableSlots.map((slot) => (
-          <button
-            key={slot}
-            onClick={() => setSelectedSlot(slot)}
-            style={{
-              backgroundColor: selectedSlot === slot ? "#4caf50" : "",
-              color: selectedSlot === slot ? "white" : "",
-              margin: "5px",
-            }}
-          >
-            {slot}
-          </button>
-        ))
-      ) : (
-        <p>No hay horarios disponibles para esta fecha.</p>
-      )}
-
-      {selectedSlot && (
-        <div style={{ marginTop: "20px" }}>
-          <p>
-            Hora seleccionada: <strong>{selectedSlot}</strong>
-          </p>
-          <button onClick={handleReserve} style={{ marginTop: "10px" }}>
-            Reservar
-          </button>
+    <div className="container">
+      <h1 className="title-reserva">Reserva tu cita!</h1>
+      <div className="content-calendar">
+        {/* Columna del Calendario */}
+        <div className="calendar-container">
+          <h2 className="subtitle">Selecciona una fecha</h2>
+          <Calendar onChange={setDate} value={date} />
         </div>
-      )}
-
-      <h3>Todas tus reservas:</h3>
-      {reservations.length > 0 ? (
-        reservations.map((res) => (
-          <p key={res.id}>
-            Fecha: {res.date}, Hora: {res.time}, Estado: {res.status}{" "}
-            {res.status === "active" && (
-              <button onClick={() => handleCancel(res.id, res.time, res.date)}>
-                Cancelar
+  
+        {/* Columna de Horarios Disponibles */}
+        <div className="slots-container">
+          <h3 className="subtitle">Horarios disponibles:</h3>
+          {availableSlots.length > 0 ? (
+            availableSlots.map((slot) => (
+              <button
+                key={slot}
+                className={`slot-button ${
+                  selectedSlot === slot ? "selected" : ""
+                }`}
+                onClick={() => setSelectedSlot(slot)}
+              >
+                {slot}
               </button>
-            )}
-          </p>
-        ))
-      ) : (
-        <p>No tienes reservas registradas.</p>
-      )}
+            ))
+          ) : (
+            <p className="no-slots-message">
+              No hay horarios disponibles para esta fecha.
+            </p>
+          )}
+  
+          {selectedSlot && (
+            <div className="selected-slot">
+              <p>
+                Hora seleccionada: <strong>{selectedSlot}</strong>
+              </p>
+              <button onClick={handleReserve} className="reserve-button">
+                Reservar
+              </button>
+            </div>
+          )}
+  
+          <h3 className="subtitle">Todas tus reservas:</h3>
+          {reservations.length > 0 ? (
+            reservations.map((res) => (
+              <p key={res.id} className="reservation">
+                Fecha: {res.date}, Hora: {res.time}, Estado: {res.status}{" "}
+                {res.status === "active" && (
+                  <button
+                    onClick={() => handleCancel(res.id, res.time, res.date)}
+                    className="cancel-button"
+                  >
+                    Cancelar
+                  </button>
+                )}
+              </p>
+            ))
+          ) : (
+            <p className="no-reservations-message">
+              No tienes reservas registradas.
+            </p>
+          )}
+        </div>
+      </div>
     </div>
   );
+  
+    
 }
 
 export default BookingCalendar;
