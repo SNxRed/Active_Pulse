@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from './supabaseClient';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import "./styles/create_review.css";
 import Review_Score from "./components/review_score";
 
@@ -17,7 +19,7 @@ export default function Create_Review() {
             const { data: { session }, error } = await supabase.auth.getSession();
             if (error) {
                 console.error("Error al obtener la sesión:", error);
-                alert("Error al verificar la autenticación del usuario.");
+                toast.error("Error al verificar la autenticación del usuario."); 
                 navigate('/reviews');
                 return;
             }
@@ -25,7 +27,7 @@ export default function Create_Review() {
                 console.log("Usuario autenticado encontrado:", session.user);
                 set_user(session.user);
             } else {
-                alert("Debes estar autenticado para publicar un testimonio.");
+                toast.warn("Debes estar autenticado para publicar un testimonio."); 
                 navigate('/reviews'); // Redirige si no está autenticado
             }
         };
@@ -44,7 +46,7 @@ export default function Create_Review() {
 
     const handlePostReview = async () => {
         if (!user) {
-            alert("Debes estar autenticado para publicar un testimonio.");
+            toast.warn("Debes estar autenticado para publicar un testimonio."); 
             navigate('/reviews'); // Redirige si el usuario intenta publicar sin estar autenticado
             return;
         }
@@ -63,7 +65,7 @@ export default function Create_Review() {
                 throw error;
             }
             
-            alert("¡Testimonio publicado con éxito!");
+            toast.success("¡Testimonio publicado con éxito!"); 
             set_testimony("");
             set_score(0);
 
@@ -71,19 +73,27 @@ export default function Create_Review() {
             navigate('/reviews');
         } catch (error) {
             console.error("Error al publicar el testimonio:", error.message);
-            alert("Hubo un error al publicar el testimonio.");
+            toast.error("Hubo un error al publicar el testimonio."); 
         }
     };
 
     return (
         <section id="create-review-container">
             <div id="create-review-header">
-                <img src="/src/assets/write_icon.png" alt="write_icon" width={"41px"} />
+                <img 
+                    src="https://ymjjininyltkzfajvwvd.supabase.co/storage/v1/object/public/uploads/public/Images/icon-write-testimony.png" 
+                    alt="write_icon" 
+                    width={"41px"} 
+                />
                 <span>Dejar testimonio</span>
             </div>
             <div id="score-container">
                 <div id="user-container">
-                    <img src="/src/assets/user_icon_2.png" alt="user_icon" width={"25px"} />
+                    <img 
+                        src="https://ymjjininyltkzfajvwvd.supabase.co/storage/v1/object/public/uploads/public/Images/icon-user-default.png" 
+                        alt="user_icon" 
+                        width={"25px"} 
+                    />
                     <span>{user ? user.email : "Invitado"}</span>
                 </div>
                 <Review_Score score={score} Handle_Score_Change={handleScoreChange} />

@@ -1,0 +1,119 @@
+.content-calendar {
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    justify-content: flex-start; /* Alinea el contenido hacia la izquierda */
+    align-items: flex-start; /* Asegura la alineación vertical correcta */
+    gap: 20px;
+    flex-grow: 1;
+  }
+
+.calendar-container {
+    flex: 2; /* Este contenedor ahora ocupará más espacio */
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    display: flex;
+     height: 500px;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .title-reserva {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #fff;
+  }
+  .slots-container {
+    flex: 2;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+
+  .subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #370061;
+  }
+
+  .slot-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    margin: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    color: #fff;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+
+
+  .default-slot {
+    background-color: #7f00b2; /* Morado */
+    color: white;
+  }
+
+  .selected-slot {
+    color: #4caf50;
+
+  }
+
+  .slot-button:hover {
+    transform: scale(1.05); /* Efecto de agrandamiento al pasar el mouse */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra suave */
+    background-color: #fff;
+    color:#7f00b2; 
+  }
+
+  .selected-slot-container {
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  .reserve-button {
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .reserve-button:hover {
+    background-color: #45a049; /* Verde más oscuro al pasar el mouse */
+  }
+  
+  .reservation {
+    margin-bottom: 10px;
+  }
+  
+  .cancel-button {
+    margin-left: 10px;
+    padding: 5px 10px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  
+  .no-slots-message,
+  .no-reservations-message {
+    text-align: center;
+    color: #555;
+  }
+
+  .calendar-container .react-calendar {
+    width: 100%; /* Asegura que el calendario ocupe todo el ancho disponible */
+    height: auto;
+  }
+
+  .reservation{
+    color:#370061; 
+  }

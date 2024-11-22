@@ -1,29 +1,29 @@
 import { useState, useEffect } from 'react';
 import { supabase } from './supabaseClient';
 
-export default function Account({ session }) {
+export default function Perfil({ userId }) {
   const [loading, setLoading] = useState(true);
   const [profileData, setProfileData] = useState({});
 
   useEffect(() => {
     async function getProfile() {
-      if (!session) {
+      if (!userId) {
         setLoading(false);
-        return; // Si no hay sesión, no hacemos nada
+        return; // Si no hay userId, no hacemos nada
       }
 
       setLoading(true);
-      const { user } = session;
-
+      console.log('User  ID:', userId); // Log del user.id
       const { data, error } = await supabase
-        .from('profiles')
-        .select('phone_number, address, first_name, last_name, date_of_birth, gender, weight, emergency_phone_number, emergency_contact_name')
-        .eq('id', user.id)
+        .from('user_profiles')
+        .select('phone_number, address, first_name, last_name, date_of_birth, gender, emergency_contact_phone, emergency_contact_name')
+        .eq('user_id', userId)
         .single();
 
       if (error) {
-        console.warn(error);
+        console.warn('Error al obtener datos:', error);
       } else if (data) {
+        console.log('Datos obtenidos:', data); // Log de los datos obtenidos
         setProfileData(data);
       }
 
@@ -31,23 +31,16 @@ export default function Account({ session }) {
     }
 
     getProfile();
-  }, [session]);
+  }, [userId]);
 
   if (loading) {
     return <div className="loading">Cargando...</div>;
   }
 
-  const {
-    first_name: firstName = 'N/A',
-    last_name: lastName = 'N/A',
-    date_of_birth: dateOfBirth = 'N/A',
-    gender = 'N/A',
-    weight = 'N/A',
-    phone_number: phoneNumber = 'N/A',
-    address = 'N/A',
-    emergency_phone_number: emergencyPhoneNumber = 'N/A',
-    emergency_contact_name: emergencyContactName = 'N/A',
-  } = profileData;
+  // Comprobamos si hay datos de perfil
+  if (!Object.keys(profileData).length) {
+    return <div>No se encontraron datos de perfil.</div>;
+  }
 
   return (
     <div className="profile-container">
@@ -55,39 +48,35 @@ export default function Account({ session }) {
       <div className="profile-details">
         <div className="profile-item">
           <label>Nombre:</label>
-          <span>{firstName}</span>
+          <span className='span-color'>{profileData.first_name}</span>
         </div>
         <div className="profile-item">
           <label>Apellido:</label>
-          <span>{lastName}</span>
+          <span className='span-color'>{profileData.last_name}</span>
         </div>
         <div className="profile-item">
           <label>Fecha de nacimiento:</label>
-          <span>{dateOfBirth}</span>
+          <span className='span-color'>{profileData.date_of_birth}</span>
         </div>
         <div className="profile-item">
           <label>Género:</label>
-          <span>{gender}</span>
-        </div>
-        <div className="profile-item">
-          <label>Peso:</label>
-          <span>{weight}</span>
+          <span className='span-color'>{profileData.gender}</span>
         </div>
         <div className="profile-item">
           <label>Número telefónico:</label>
-          <span>{phoneNumber}</span>
+          <span className='span-color'>{profileData.phone_number}</span>
         </div>
         <div className="profile-item">
           <label>Dirección:</label>
-          <span>{address}</span>
+          <span className='span-color'>{profileData.address}</span>
         </div>
         <div className="profile-item">
           <label>Número de emergencia:</label>
-          <span>{emergencyPhoneNumber}</span>
+          <span className='span-color'>{profileData.emergency_contact_phone}</span>
         </div>
         <div className="profile-item">
           <label>Nombre del contacto de emergencia:</label>
-          <span>{emergencyContactName}</span>
+          <span className='span-color'>{profileData.emergency_contact_name}</span>
         </div>
       </div>
     </div>

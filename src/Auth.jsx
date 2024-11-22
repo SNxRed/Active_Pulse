@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from './supabaseClient';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Auth() {
   const [loading, setLoading] = useState(false);
@@ -19,13 +21,36 @@ export default function Auth() {
   const handleLogin = async (event) => {
     event.preventDefault();
     setLoading(true);
+    
+    // Intentar iniciar sesión
     const { error } = await supabase.auth.signInWithPassword({ email, password });
-
+  
     if (error) {
-      alert(error.error_description || error.message);
+      toast.error(error.error_description || error.message);
     } else {
-      alert('¡Inicio de sesión exitoso!');
-      navigate('/');
+      toast.success('¡Inicio de sesión exitoso!');
+  
+      // Obtener la sesión actual
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      // Comprobar el perfil del usuario en la tabla user_profiles
+      const { data: userProfile, error: profileError } = await supabase
+        .from('user_profiles')
+        .select('isadmin')
+        .eq('user_id', user.id)
+        .single(); // Obtener solo un registro
+  
+      if (profileError) {
+        console.error("Error fetching user profile:", profileError);
+        toast.error("Error al verificar el perfil del usuario.");
+      } else {
+        // Verificar si el usuario es admin
+        if (userProfile.isAdmin) {
+          navigate('/admin'); // Redirigir a la página de administrador
+        } else {
+          navigate('/'); // Redirigir a la página principal
+        }
+      }
     }
     setLoading(false);
   };
@@ -34,14 +59,16 @@ export default function Auth() {
     navigate('/forgot-password');
   };
 
-  const handleOAuthLogin = async (provider) => {
-    setLoading(true);
-    const { error } = await supabase.auth.signInWithOAuth({ provider });
-    if (error) {
-      alert(error.message);
-    }
-    setLoading(false);
-  };
+  // const handleOAuthLogin = async (provider) => {
+  //   setLoading(true);
+  //   const { error } = await supabase.auth.signInWithOAuth({ provider });
+  //   if (error) {
+  //     toast.error(error.message);
+  //   } else {
+  //     toast.success(`Inicio de sesión con ${provider} exitoso`); // Notificación para inicio con OAuth
+  //   }
+  //   setLoading(false);
+  // };
 
   return (
     <div className="auth-container">
@@ -89,9 +116,9 @@ export default function Auth() {
           <button className="link-button" onClick={handleForgotPassword}>
             ¿Olvidaste tu contraseña?
           </button>
-          {<button className="link-button" onClick={() => navigate('/user')}>
+          <button className="link-button" onClick={() => navigate('/user')}>
             Ingresar como invitado
-          </button>}
+          </button>
         </div>
       </div>
     </div>

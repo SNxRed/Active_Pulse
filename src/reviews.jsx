@@ -18,7 +18,7 @@ export default function Reviews() {
           console.error("Error al obtener testimonios:", error);
           return;
         }
-        console.log(data)
+        console.log(data);
         setReviews(data); // Guardar los testimonios en el estado
       } catch (error) {
         console.error("Error al conectarse a la base de datos:", error.message);
@@ -34,17 +34,21 @@ export default function Reviews() {
         reviews.map((review, index) => (
           <div className="card" key={index}>
             <div className="card-header">
-
-              <span className="date-time">{new Date(review.created_at).toLocaleDateString()}</span>
+              <span className="date-time">
+                {new Date(review.created_at).toLocaleDateString()}
+              </span>
               <Review_Score score={review.score} />
             </div>
 
-            
-            <p className="description">“{review.testimony}”</p>
+            <p className="testimony">“{review.testimony}”</p>
 
             <div className="author">
               <span>~</span>
-              <img src="/src/assets/user_icon_2.png" alt="user_icon" width={"21px"} />{" "}
+              <img
+                src="https://ymjjininyltkzfajvwvd.supabase.co/storage/v1/object/public/uploads/public/Images/icon-user-default.png"
+                alt="user_icon"
+                width={"21px"}
+              />{" "}
               {review.user_email || "Usuario Anónimo"}
             </div>
           </div>

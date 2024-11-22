@@ -14,7 +14,6 @@ h2 {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background-color: #370061;
   font-family: 'Montserrat', sans-serif;
   padding: 20px;
 }
@@ -273,7 +272,6 @@ button:focus-visible {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* background-color: #7f00b2;  */
   background: linear-gradient(to top, #370061 0%, #7f00b2 100%);
   padding: 15px 30px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -281,37 +279,43 @@ button:focus-visible {
 }
 
 .navbar-logo {
-  height: 90px; /* Ajusta el tamaÃ±o del logo */
+  height: 90px; /* Ajusta el tamaño del logo */
   width: 350px;
   cursor: pointer;
 }
 
 .navbar-buttons {
   display: flex;
-  gap: 15px;
+  flex-wrap: wrap; /* Permite que los botones se ajusten en múltiples líneas si es necesario */
+  gap: 15px; /* Espacio entre botones */
+  flex-grow: 1; /* Permite que el contenedor de botones crezca */
+  justify-content: flex-end; /* Alinea los botones a la derecha */
 }
 
 .navbar-button {
-  background-color: #370061;
-  color: #FFFFFF;
-  border: 2px solid #000000;
+  background-color: #2a004e;
+  color: white;
+  /* border: 2px solid transparent; */
   padding: 8px 16px;
   border-radius: 8px;
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s;
+  flex: 0 1 auto; /* Permite que los botones tengan un ancho automático */
+  min-width: 120px; /* Ancho mínimo para los botones */
+  outline: 2px solid transparent;
+  border: none;
 }
 
 .navbar-button:hover {
-  border-color: transparent;
+
   background-color: #7f00b2;
-  color: #ffffff;
+
 }
 
 .navbar-button:focus {
-  outline: none;
-  background-color: #0056b3;
-  color: white;
+  outline-color: #2a004e;
+  background-color: #7f00b2;
 }
 
 .navbar-button:disabled {
@@ -321,69 +325,84 @@ button:focus-visible {
 }
 
 .user-container {
-  margin: 0 auto;
-  padding: 20px;
-  text-align: justify;
-  max-width: 85%;
+  padding: 20px; /* Espaciado alrededor del contenedor principal */
+}
+
+.user-introduction {
+  text-align: center;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
 }
 
 .services-section {
   display: flex;
-  overflow-x: auto; /* Permite el desplazamiento horizontal */
-  margin-top: 20px;
-  /* padding: 10px; Espaciado interno para que las tarjetas no toquen los bordes */
-  scrollbar-width: none; /* Para Firefox */
+  flex-direction: column; /* Apila los contenedores verticalmente */
+  align-items: center; /* Centra los elementos horizontalmente */
 }
 
-/* Para navegadores WebKit (Chrome, Safari) */
-.services-section::-webkit-scrollbar {
-  display: none; /* Oculta la barra de desplazamiento */
-}
-
-.service-card {
+.image-container {
   display: flex;
-  flex-direction: column; /* Asegúrate de que la imagen esté arriba del texto */
-  align-items: center; /* Centra el contenido horizontalmente */
-  margin: 20px; /* Espaciado entre tarjetas */
-  border: 2px solid #ccc; /* Borde alrededor de la tarjeta */
-  border-radius: 8px; /* Bordes redondeados */
-  overflow: hidden; /* Asegúrate de que el contenido no se desborde */
-  width: 500px; /* Ancho fijo para todas las tarjetas */
+  flex-wrap: wrap; /* Permite que las imágenes se ajusten en múltiples filas */
+  justify-content: center; /* Centra las imágenes horizontalmente */
+  margin-bottom: 20px; /* Espaciado entre la imagen y el texto */
 }
 
 .service-image {
-  width: 100%; /* Ancho completo de la tarjeta */
-  height: 500px; /* Alto fijo para la imagen */
-  object-fit: cover; /* Mantiene la proporción de la imagen */
-  border: 1px solid;
-  border-radius: 8px;;
+  margin: 10px; /* Espaciado entre imágenes */
+}
+
+.service-image img {
+  width: 30rem; /* Ancho de las imágenes */
+  height: 40rem; /* Altura de las imágenes para mantener las mismas dimensiones */
+  object-fit: cover; /* Mantiene la proporción de la imagen y recorta si es necesario */
+  border-radius: 8px; /* Bordes redondeados */
+  border: 1px solid #ccc; /* Borde alrededor de la imagen */
+}
+
+.text-container {
+  display: flex;
+  flex-direction: column; /* Apila los textos verticalmente */
+  align-items: center; /* Centra los textos horizontalmente */
+  width: 100%; /* Ancho completo para los textos */
 }
 
 .service-text {
+  border: 2px solid #ccc; /* Borde alrededor de la tarjeta de texto */
+  border-radius: 8px; /* Bordes redondeados */
   padding: 10px; /* Espaciado interno */
-  text-align: justify; /* Centra el texto dentro de la tarjeta */
+  margin: 10px; /* Espaciado entre tarjetas de texto */
+  width: 80%; /* Ancho de las tarjetas de texto */
+  text-align: justify; /* Justifica el texto dentro de la tarjeta */
+  background-color: #7f00b2;
 }
 
-.action-section {
-  margin-top: 30px;
+.service-text h2 {
+  text-align: center; /* Centra el encabezado h2 */
+  margin: 0; /* Elimina el margen predeterminado */
 }
 
 .contact-section {
   display: flex;
-  align-items: center;
-  width: 100%;
+  align-items: center; /* Alinea verticalmente el contenido */
+  justify-content: center; /* Centra el contenido horizontalmente */
+  width: 80%;
+  margin: auto;
 }
 
 .contact-text {
-  flex: 1;
-  text-align: center;
+  flex: 1; /* Permite que el texto ocupe el espacio restante */
+  text-align: center; /* Centra el texto de contacto */
+  margin-right: 20px; /* Espaciado a la derecha para separar el texto de la imagen */
 }
 
 .contact-image {
-  width: 20%;
-  height: 40%;
-  border-radius: 10px;
-  border: 2px solid;
+  width: 300px; /* Ajusta el ancho de la imagen de contacto */
+  height: auto; /* Mantiene la proporción de la imagen */
+  border-radius: 10px; /* Bordes redondeados */
+  border: 2px solid; /* Borde alrededor de la imagen de contacto */
 }
 
 .account-container {
@@ -480,4 +499,10 @@ label {
 
 main{
   width: 100%;
+  flex-grow: 1;
 }
+
+.span-color {
+  color: #000000;
+}
+

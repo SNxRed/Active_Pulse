@@ -1,19 +1,21 @@
-import { useState, useEffect } from 'react';
-import { supabase } from './supabaseClient';
-import { useNavigate } from 'react-router-dom';
-import './styles/UpdatePassword.css';
+import { useState, useEffect } from "react";
+import { supabase } from "./supabaseClient";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "./styles/UpdatePassword.css";
 
 export default function UpdatePassword() {
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] =useState('');
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleUpdatePassword = async (event) => {
     event.preventDefault();
 
-    if (password!==confirmPassword){
-      alert('Las contraseñas no coinciden. Por favor, intenta nuevamente');
+    if (password !== confirmPassword) {
+      toast.warn("Las contraseñas no coinciden. Por favor, intenta nuevamente");
       return;
     }
 
@@ -22,98 +24,96 @@ export default function UpdatePassword() {
     const { error } = await supabase.auth.updateUser({ password });
 
     if (error) {
-      alert(error.error_description || error.message);
+      toast.error(error.error_description || error.message);
     } else {
       // Cerrar la sesión del usuario
       await supabase.auth.signOut();
-      alert('¡Contraseña actualizada! Por favor, inicia sesión con tu nueva contraseña.');
-      navigate('/login'); // Redirigir a la página de inicio de sesión
+      toast.success(
+        "¡Contraseña actualizada! Por favor, inicia sesión con tu nueva contraseña."
+      );
+      navigate("/login"); // Redirigir a la página de inicio de sesión
     }
 
     setLoading(false);
   };
 
-
-
-    useEffect(() => {
+  useEffect(() => {
     // Saltar la verificación de sesión en modo desarrollo
     console.log("Modo desarrollo: omitiendo verificación de sesión.");
-  }, []); 
+  }, []);
 
- /*useEffect(() => {
-
-    // Si el usuario no está autenticado, redirigir a la página de inicio de sesión
-    const checkSession = async () => {
-      const { data } = await supabase.auth.getSession();
-      if (!data.session) {
-        navigate('/login');
-      }
-    };
-    checkSession();
-  }, [navigate]); */
-
-  
   return (
     <>
-    {/* Encabezado*/}
-    <header
-    style={{
-      width: '100%',
-      background: 'linear-gradient(to top, #370061 0%, #7f00b2 100%)',
-      padding: '1rem 2rem',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'flex-start', // Logo y título alineados a la izquierda
-      boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
-    }}
-    >
-      {/*Logo*/}
-      <img
-          src="/images/logo1.png" // Ajusta la ruta del logo
+      {/* Encabezado */}
+      <header
+        style={{
+          width: "100%",
+          background: "linear-gradient(to top, #370061 0%, #7f00b2 100%)",
+          padding: "1rem 2rem",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "flex-start",
+          boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+        }}
+      >
+        {/* Logo */}
+        <img
+          src="https://ymjjininyltkzfajvwvd.supabase.co/storage/v1/object/public/uploads/public/Images/logo-main.png"
           alt="Logo Active Pulse"
           style={{
-            height: '100px', // Ajusta el tamaño del logo
-            marginRight: '1rem', // Espacio entre el logo y el título
+            height: "100px",
+            marginRight: "1rem",
           }}
         />
-    </header>
-      {/*Titulo de la página */}
-    <div className="reset-password-container">
-      <div className="reset-password-box">
-        <h1 className="title">Establecer Nueva Contraseña</h1>
-        <p className="description">
-          Ingresa tu nueva contraseña para actualizar tu cuenta.
-        </p>
-        <form onSubmit={handleUpdatePassword}>
-          <input
-            className="inputField"
-            type="password"
-            placeholder="Nueva contraseña"
-            value={password}
-            required
-            onChange={(e) => setPassword(e.target.value)}
-          />
+      </header>
 
-          <input
-            className="inputfield"
-            type ="password"
-            placeholder="Confirmar contraseña"
-            value={confirmPassword}
-            required
-            onChange={(e)=> setConfirmPassword(e.target.value)}
+      {/* Contenido principal */}
+      <div className="reset-password-container">
+        <div className="reset-password-box">
+          <h1 className="title">Establecer Nueva Contraseña</h1>
+          <p className="description">
+            Ingresa tu nueva contraseña para actualizar tu cuenta.
+          </p>
+          <form onSubmit={handleUpdatePassword}>
+            <input
+              className="inputField"
+              type="password"
+              placeholder="Nueva contraseña"
+              value={password}
+              required
+              onChange={(e) => setPassword(e.target.value)}
             />
-          <button className="button" disabled={loading}>
-            {loading ? <span>Cargando...</span> : <span>Actualizar Contraseña</span>}
-          </button>
-        </form>
 
+            <input
+              className="inputField"
+              type="password"
+              placeholder="Confirmar contraseña"
+              value={confirmPassword}
+              required
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+            <button className="button" disabled={loading}>
+              {loading ? (
+                <span>Cargando...</span>
+              ) : (
+                <span>Actualizar Contraseña</span>
+              )}
+            </button>
+          </form>
+        </div>
       </div>
-      
-      
-    </div>
-    <div className="background-images">
-        <img src="/images/logo3.1.png" alt="Esquina izquierda" className="corner-image left" />
-        <img src="/images/logo3.1.png" alt="Esquina derecha" className="corner-image right" />
+
+      <div className="background-images">
+        <img
+          src="https://ymjjininyltkzfajvwvd.supabase.co/storage/v1/object/public/uploads/public/Images/corner-logo.png"
+          alt="Esquina izquierda"
+          className="corner-image left"
+        />
+        <img
+          src="https://ymjjininyltkzfajvwvd.supabase.co/storage/v1/object/public/uploads/public/Images/corner-logo.png"
+          alt="Esquina derecha"
+          className="corner-image right"
+        />
       </div>
     </>
   );
