@@ -12,12 +12,12 @@ const UserFileDownload = ({ userId }) => {
         .from('user_files') // Cambia esto si tu tabla tiene otro nombre
         .select('file_name, file_path')
         .eq('user_id', userId) // Filtra por el ID del usuario
-        .single(); // Obtiene solo un archivo
-
+        // .single(); // Obtiene solo un archivo
+      console.log(data)
       if (error) {
         console.error('Error fetching user file:', error);
       } else {
-        setUserFile(data);
+        setUserFile(data[0]);
       }
       setLoading(false);
     };
@@ -26,10 +26,12 @@ const UserFileDownload = ({ userId }) => {
   }, [userId]);
 
   const downloadFile = async (fileName) => {
+    console.log(fileName)
     const { data, error } = await supabase
       .storage
       .from('uploads') // Nombre del bucket
-      .download(`public/Rutinas/${fileName}`); // Ruta del archivo dentro del bucket
+      .download(`Rutinas/${fileName}`); // Ruta del archivo dentro del bucket
+      console.log(data)
 
     if (error) {
       console.error('Error downloading file:', error);
